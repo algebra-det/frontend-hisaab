@@ -8,8 +8,7 @@ export default async function Home() {
   const indexData = await indexCall;
   return (
     <div className='grid place-content-center mt-4'>
-      <h2>List your transactions</h2>
-      <p className='mt-4'>{indexData.message}</p>
+      <h2 className='mt-4'>{indexData.message}</h2>
     </div>
   );
 }

@@ -4,6 +4,7 @@ const getIndexData = async () => {
     headers: {
       "content-type": "application/json",
     },
+    cache: "no-cache",
   });
   console.log("tran: ", res.ok, res.status);
   if (!res.ok) throw new Error("Failed to fetch data");
