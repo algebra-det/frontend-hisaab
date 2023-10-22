@@ -43,7 +43,7 @@ function SingUpForm() {
   };
   return (
     <div className='w-fit'>
-      <h1 className='mb-8 text-2xl'>Login Form</h1>
+      <h1 className='mb-8 text-2xl'>SingUp Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
           <FormField
