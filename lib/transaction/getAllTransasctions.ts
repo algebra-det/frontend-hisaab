@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 const fetchData = async () => {
-  const res = await fetch("http://localhost:8000/transactions", {
+  const res = await fetch(`${process.env.API_URL}/transactions`, {
     headers: {
       "content-type": "application/json",
     },
