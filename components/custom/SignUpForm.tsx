@@ -15,20 +15,27 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 
-const formSchema = z.object({
-  email: z.string().min(1, "Email is required.").email("Invalid Email"),
-  password: z
-    .string()
-    .min(1, "Password is required.")
-    .min(8, "Password must have more than 8 characters."),
-});
+const formSchema = z
+  .object({
+    email: z.string().min(1, "Email is required.").email("Invalid Email"),
+    password: z
+      .string()
+      .min(1, "Password is required.")
+      .min(8, "Password must have more than 8 characters."),
+    confirmPassword: z.string().min(1, "Confirm Password is required."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 
-function LoginForm() {
+function SingUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -63,7 +70,20 @@ function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type='password' placeholder='****' {...field} />
+                  <Input type='password' placeholder='*********' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='confirmPassword'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input type='password' placeholder='*********' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,9 +96,9 @@ function LoginForm() {
 
         <div className='mx-auto my-4'>
           <p className='text-sm'>
-            If you don&apos;t have an account, please&nbsp;
-            <Link href='/signup' className='underline'>
-              Sign Up
+            If you already have an account, please&nbsp;
+            <Link href='/login' className='underline'>
+              Login
             </Link>
           </p>
         </div>
@@ -87,4 +107,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default SingUpForm;
