@@ -4,6 +4,8 @@ const fetchData = async () => {
     headers: {
       "content-type": "application/json",
     },
+    cache: "no-cache",
+    credentials: "include",
   });
   console.log("tran: ", res.ok, res.status);
   if (res.status === 401) redirect("/login");
