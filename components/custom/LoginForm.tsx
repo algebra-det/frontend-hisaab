@@ -30,14 +30,16 @@ const formSchema = z.object({
 
 async function loginAPICall(data: loginData) {
   try {
-    // const response = await fetch(`${process.env.API_URL}/login`, {
-    const response = await fetch(`http://localhost:8000/login`, {
-      headers: {
-        "content-type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(data),
+      }
+    );
     const loginResponse = await response.json();
     console.log("Response object: ", loginResponse);
   } catch (error) {
@@ -49,8 +51,8 @@ function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "mickey@gmail.com",
+      password: "logmein1",
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
