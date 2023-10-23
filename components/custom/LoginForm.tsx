@@ -15,6 +15,11 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 
+type loginData = {
+  email: String;
+  password: String;
+};
+
 const formSchema = z.object({
   email: z.string().min(1, "Email is required.").email("Invalid Email"),
   password: z
@@ -22,6 +27,23 @@ const formSchema = z.object({
     .min(1, "Password is required.")
     .min(8, "Password must have more than 8 characters."),
 });
+
+async function loginAPICall(data: loginData) {
+  try {
+    // const response = await fetch(`${process.env.API_URL}/login`, {
+    const response = await fetch(`http://localhost:8000/login`, {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const loginResponse = await response.json();
+    console.log("Response object: ", loginResponse);
+  } catch (error) {
+    console.log("Error while loggin in: ", error);
+  }
+}
 
 function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,6 +55,7 @@ function LoginForm() {
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log("props are : ", values);
+    loginAPICall(values);
   };
   return (
     <div className='w-fit'>
