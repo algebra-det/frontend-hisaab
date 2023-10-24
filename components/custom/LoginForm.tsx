@@ -46,8 +46,7 @@ function LoginForm() {
       );
       const loginResponse = await response.json();
       if (response.ok) {
-        cookieStore.set("authorization", loginResponse.token);
-        cookieStore.set("user", loginResponse);
+        console.log("Response object: ", response.status, loginResponse);
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
