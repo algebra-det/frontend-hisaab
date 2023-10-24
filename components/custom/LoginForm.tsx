@@ -54,16 +54,10 @@ function LoginForm() {
       const loginResponse = await response.json();
       if (response.ok) {
       } else {
-        if (response.status === 400)
-          form.setError(loginResponse.fieldName, {
-            type: response.status.toString(),
-            message: loginResponse.message,
-          });
-        else
-          form.setError("root.serverError", {
-            type: response.status.toString(),
-            message: loginResponse.message,
-          });
+        form.setError("root.serverError", {
+          type: response.status.toString(),
+          message: loginResponse.message,
+        });
       }
       console.log("Response object: ", response.status, loginResponse);
     } catch (error) {
@@ -71,7 +65,7 @@ function LoginForm() {
     }
   };
   return (
-    <div className='w-fit'>
+    <div className='w-fit m-10 min-w-min sm:w-96'>
       <h1 className='mb-8 text-2xl'>Login Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>

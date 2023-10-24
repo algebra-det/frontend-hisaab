@@ -84,7 +84,7 @@ function SingUpForm() {
     }
   };
   return (
-    <div className='w-fit'>
+    <div className='w-fit m-10 min-w-min sm:w-96'>
       <h1 className='mb-8 text-2xl'>SingUp Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
