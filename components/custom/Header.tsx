@@ -9,6 +9,10 @@ import ProfileButton from "./ProfileButton";
 
 const routes = [
   {
+    href: "/signup",
+    label: "Sing Up",
+  },
+  {
     href: "/transactions",
     label: "Transactions",
   },

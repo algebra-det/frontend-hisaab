@@ -40,25 +40,6 @@ const formSchema = z
     message: "Passwords do not match",
   });
 
-async function signUpAPICall(data: singUpDataType) {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(data),
-      }
-    );
-    const loginResponse = await response.json();
-    console.log("Response object: ", loginResponse);
-  } catch (error) {
-    console.log("Error while loggin in: ", error);
-  }
-}
-
 function SingUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -69,15 +50,49 @@ function SingUpForm() {
       confirmPassword: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("props are : ", values);
-    signUpAPICall(values);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(values),
+        }
+      );
+      const signUpResponse = await response.json();
+      if (response.ok) {
+      } else {
+        if (response.status === 400)
+          form.setError(signUpResponse.fieldName, {
+            type: response.status.toString(),
+            message: signUpResponse.message,
+          });
+        else
+          form.setError("root.serverError", {
+            type: response.status.toString(),
+            message: signUpResponse.message,
+          });
+      }
+      console.log("Response object: ", response.status, signUpResponse);
+    } catch (error) {
+      console.log("Error while loggin in: ", error);
+    }
   };
   return (
     <div className='w-fit'>
       <h1 className='mb-8 text-2xl'>SingUp Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          {form.formState?.errors?.root?.serverError.type && (
+            <p className='text-[1rem] font-medium text-destructive'>
+              {form.formState?.errors?.root?.serverError.message}
+            </p>
+          )}
           <FormField
             control={form.control}
             name='name'

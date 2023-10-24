@@ -28,24 +28,7 @@ const formSchema = z.object({
     .min(8, "Password must have more than 8 characters."),
 });
 
-async function loginAPICall(data: loginData) {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(data),
-      }
-    );
-    const loginResponse = await response.json();
-    console.log("Response object: ", loginResponse);
-  } catch (error) {
-    console.log("Error while loggin in: ", error);
-  }
-}
+async function loginAPICall(data: loginData) {}
 
 function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,15 +38,48 @@ function LoginForm() {
       password: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("props are : ", values);
-    loginAPICall(values);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(values),
+        }
+      );
+      const loginResponse = await response.json();
+      if (response.ok) {
+      } else {
+        if (response.status === 400)
+          form.setError(loginResponse.fieldName, {
+            type: response.status.toString(),
+            message: loginResponse.message,
+          });
+        else
+          form.setError("root.serverError", {
+            type: response.status.toString(),
+            message: loginResponse.message,
+          });
+      }
+      console.log("Response object: ", response.status, loginResponse);
+    } catch (error) {
+      console.log("Error while loggin in: ", error);
+    }
   };
   return (
     <div className='w-fit'>
       <h1 className='mb-8 text-2xl'>Login Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          {form.formState?.errors?.root?.serverError.type && (
+            <p className='text-[1rem] font-medium text-destructive'>
+              {form.formState?.errors?.root?.serverError.message}
+            </p>
+          )}
           <FormField
             control={form.control}
             name='email'
