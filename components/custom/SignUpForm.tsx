@@ -15,13 +15,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 
-type singUpDataType = {
-  name: String;
-  email: String;
-  password: String;
-  confirmPassword: String;
-};
-
 const formSchema = z
   .object({
     name: z

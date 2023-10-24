@@ -15,11 +15,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 
-type loginData = {
-  email: String;
-  password: String;
-};
-
 const formSchema = z.object({
   email: z.string().min(1, "Email is required.").email("Invalid Email"),
   password: z
@@ -27,8 +22,6 @@ const formSchema = z.object({
     .min(1, "Password is required.")
     .min(8, "Password must have more than 8 characters."),
 });
-
-async function loginAPICall(data: loginData) {}
 
 function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,6 +46,8 @@ function LoginForm() {
       );
       const loginResponse = await response.json();
       if (response.ok) {
+        cookieStore.set("authorization", loginResponse.token);
+        cookieStore.set("user", loginResponse);
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
