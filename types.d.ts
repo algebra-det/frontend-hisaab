@@ -2,11 +2,12 @@ export interface Transaction {
   id: number;
   productName: string;
   sellingPrice: number;
+  purchasePrice: number;
   profit: number;
   createdAt: string;
   updatedAt: string;
   createdBy: number;
-  User: User;
+  User?: User;
 }
 
 export interface User {
