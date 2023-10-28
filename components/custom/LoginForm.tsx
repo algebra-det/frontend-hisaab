@@ -29,7 +29,7 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
-  const context = useContext(userContext);
+  const { user, setUser } = useContext(userContext);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,10 +52,10 @@ function LoginForm() {
         }
       );
       const loginResponse = await response.json();
-      if (response.ok && context) {
+      if (response.ok) {
         console.log("Response object: ", response.status, loginResponse);
         setCookie("authorization", `Bearer ${loginResponse.data.token}`);
-        context.setUser(loginResponse.data);
+        setUser(loginResponse.data);
         router.push("/transactions");
       } else {
         form.setError("root.serverError", {

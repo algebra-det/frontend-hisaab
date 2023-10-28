@@ -6,7 +6,7 @@ type UserContextType = {
   setUser: Dispatch<SetStateAction<User | null>>;
 };
 
-export const userContext = createContext<UserContextType | null>(null);
+export const userContext = createContext({} as UserContextType);
 
 function Context({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>({
