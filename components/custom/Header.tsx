@@ -11,14 +11,6 @@ import Context from "@/contexts/userContext";
 
 const routes = [
   {
-    href: "/login",
-    label: "Login",
-  },
-  {
-    href: "/signup",
-    label: "Sign Up",
-  },
-  {
     href: "/transactions",
     label: "Transactions",
   },
