@@ -43,7 +43,7 @@ export default function MainTransaction() {
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch("http://localhost:8000/transactions", {
       headers: {
-        authorization: auth,
+        Authorization: JSON.parse(JSON.stringify(auth)),
         "Content-Type": "application/json",
       },
     });
