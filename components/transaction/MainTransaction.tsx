@@ -8,6 +8,7 @@ import EditTransaction from "@/components/transaction/EditTransaction";
 import { useEffect, useState } from "react";
 import { Transaction } from "@/types";
 import DeleteTransaction from "./DeleteTransaction";
+import { thousandSeparator } from "@/utils/currencyFormat";
 
 export default function MainTransaction() {
   const limit = 2;
@@ -90,7 +91,10 @@ export default function MainTransaction() {
           )}
           <>
             <p className='mt-3 mb-2'>
-              Total Profit: &#8377;{transactionData.totalProfit}
+              Total Profit:{" "}
+              <span className='text-xl'>
+                {thousandSeparator(transactionData.totalProfit)}
+              </span>
             </p>
             <TransactionsListWithCards
               transactions={transactionData.data}
