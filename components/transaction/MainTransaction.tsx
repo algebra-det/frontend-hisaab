@@ -10,7 +10,13 @@ import { Transaction } from "@/types";
 
 export default function MainTransaction() {
   const router = useRouter();
-  const [allTransactions, setAllTransactions] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [fetching, setFetching] = useState(true);
+  const [transactionData, setTransactionData] = useState({
+    data: [],
+    totalProfit: 0,
+  });
   const [edit, setEdit] = useState({
     id: 9,
     productName: "fzs 4",
@@ -21,8 +27,6 @@ export default function MainTransaction() {
     updatedAt: "2023-10-22T18:47:29.703Z",
     createdBy: 2,
   });
-  const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
   function openEditDialog(editedTransaction: Transaction) {
     setEdit(editedTransaction);
     setTimeout(() => {
@@ -36,16 +40,18 @@ export default function MainTransaction() {
 
   const fetchTransactions = async () => {
     const auth = getCookie("authorization");
+    console.log("Cookie: ", auth, typeof auth);
     const response = await fetch("http://localhost:8000/transactions", {
       headers: {
-        authorization: auth,
+        authorization: `${auth}`,
       },
     });
     console.log("response: ", response);
     if (response.ok) {
-      const list = await response.json();
-      console.log("Transactions are: ", list);
-      setAllTransactions(list.data);
+      const data = await response.json();
+      console.log("Transactions are: ", data);
+      setTransactionData(data);
+      setFetching(false);
     } else if (response.status === 401) {
       router.push("/login");
     } else {
@@ -60,13 +66,17 @@ export default function MainTransaction() {
       {open && (
         <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
       )}
-      {error ? (
-        error
-      ) : (
-        <TransactionsListWithCards
-          transactions={allTransactions}
-          openEditDialog={openEditDialog}
-        />
+      {error && <p>{error}</p>}
+      {!fetching && (
+        <>
+          <p className='mt-3 mb-2'>
+            Total Profit: &#8377;{transactionData.totalProfit}
+          </p>
+          <TransactionsListWithCards
+            transactions={transactionData.data}
+            openEditDialog={openEditDialog}
+          />
+        </>
       )}
     </>
   );
