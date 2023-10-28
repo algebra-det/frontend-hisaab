@@ -1,16 +1,16 @@
 import TransactionCard from "./TransactionCard";
-const dummyTransactions = require("@/lib/dummyTransactions");
 
 import { Transaction } from "@/types";
-function Transactions({
+function TransactionsListWithCards({
+  transactions,
   openEditDialog,
 }: {
+  transactions: Transaction[];
   openEditDialog: (transaction: Transaction) => void;
 }) {
-  const transactions: Transaction[] = dummyTransactions;
   return (
     <>
-      <div className='overflow-auto w-80 sm:h-2/5 sm:w-96'>
+      <div className='overflow-auto w-80 sm:h-5/6 sm:w-96'>
         <div>
           {transactions.map((q) => (
             <div className='mt-2' key={q.id}>
@@ -26,4 +26,4 @@ function Transactions({
   );
 }
 
-export default Transactions;
+export default TransactionsListWithCards;

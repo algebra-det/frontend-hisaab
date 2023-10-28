@@ -1,12 +1,16 @@
 "use client";
-import Transactions from "@/components/transaction/Transactions";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import TransactionsListWithCards from "@/components/transaction/TransactionsListWithCards";
 import NewTransaction from "@/components/transaction/NewTransaction";
 import EditTransaction from "@/components/transaction/EditTransaction";
 // import TransactionTable from "@/components/transaction/TransactionTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Transaction } from "@/types";
 
 export default function MainTransaction() {
+  const router = useRouter();
+  const [allTransactions, setAllTransactions] = useState([]);
   const [edit, setEdit] = useState({
     id: 9,
     productName: "fzs 4",
@@ -18,12 +22,36 @@ export default function MainTransaction() {
     createdBy: 2,
   });
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   function openEditDialog(editedTransaction: Transaction) {
     setEdit(editedTransaction);
     setTimeout(() => {
       setOpen(true);
     }, 100);
   }
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  const fetchTransactions = async () => {
+    const auth = getCookie("authorization");
+    const response = await fetch("http://localhost:8000/transactions", {
+      headers: {
+        authorization: auth,
+      },
+    });
+    console.log("response: ", response);
+    if (response.ok) {
+      const list = await response.json();
+      console.log("Transactions are: ", list);
+      setAllTransactions(list.data);
+    } else if (response.status === 401) {
+      router.push("/login");
+    } else {
+      setError("Error occured while fetching");
+    }
+  };
 
   return (
     <>
@@ -32,7 +60,14 @@ export default function MainTransaction() {
       {open && (
         <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
       )}
-      <Transactions openEditDialog={openEditDialog} />
+      {error ? (
+        error
+      ) : (
+        <TransactionsListWithCards
+          transactions={allTransactions}
+          openEditDialog={openEditDialog}
+        />
+      )}
     </>
   );
 }

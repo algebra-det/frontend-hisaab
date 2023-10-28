@@ -7,6 +7,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { setCookie } from "cookies-next";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -14,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required.").email("Invalid Email"),
@@ -24,6 +27,7 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,6 +51,8 @@ function LoginForm() {
       const loginResponse = await response.json();
       if (response.ok) {
         console.log("Response object: ", response.status, loginResponse);
+        setCookie("authorization", `Bearer ${loginResponse.data.token}`);
+        router.push("/transactions");
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
