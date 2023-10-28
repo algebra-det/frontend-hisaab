@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { userContext } from "@/contexts/userContext";
+import { useContext } from "react";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required.").email("Invalid Email"),
@@ -27,6 +29,7 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
+  const { setUser } = useContext(userContext);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,6 +55,7 @@ function LoginForm() {
       if (response.ok) {
         console.log("Response object: ", response.status, loginResponse);
         setCookie("authorization", `Bearer ${loginResponse.data.token}`);
+        setUser(loginResponse.data);
         router.push("/transactions");
       } else {
         form.setError("root.serverError", {

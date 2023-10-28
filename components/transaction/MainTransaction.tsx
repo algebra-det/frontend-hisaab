@@ -39,7 +39,8 @@ export default function MainTransaction() {
   }, []);
 
   const fetchTransactions = async () => {
-    const auth = getCookie("authorization");
+    let auth = getCookie("authorization");
+    if (!auth) auth = "";
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
@@ -65,21 +66,24 @@ export default function MainTransaction() {
 
   return (
     <>
-      {/* <TransactionTable /> */}
-      <NewTransaction />
-      {open && (
-        <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
-      )}
-      {error && <p>{error}</p>}
       {!fetching && (
         <>
-          <p className='mt-3 mb-2'>
-            Total Profit: &#8377;{transactionData.totalProfit}
-          </p>
-          <TransactionsListWithCards
-            transactions={transactionData.data}
-            openEditDialog={openEditDialog}
-          />
+          <h1 className='text-3xl mb-4'>Transactions</h1>
+          {/* <TransactionTable /> */}
+          <NewTransaction />
+          {open && (
+            <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
+          )}
+          {error && <p>{error}</p>}
+          <>
+            <p className='mt-3 mb-2'>
+              Total Profit: &#8377;{transactionData.totalProfit}
+            </p>
+            <TransactionsListWithCards
+              transactions={transactionData.data}
+              openEditDialog={openEditDialog}
+            />
+          </>
         </>
       )}
     </>
