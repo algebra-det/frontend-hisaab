@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import dayjs from "dayjs";
 
 import { Transaction } from "@/types";
@@ -14,8 +14,10 @@ import { Transaction } from "@/types";
 export default function Transactions({
   transaction,
   openEditDialog,
+  openDeleteDialog,
 }: {
   openEditDialog: (transaction: Transaction) => void;
+  openDeleteDialog: (transaction: Transaction) => void;
   transaction: Transaction;
 }) {
   return (
@@ -23,10 +25,14 @@ export default function Transactions({
       <Card className='sm:w-full'>
         <CardHeader className='flex flex-row justify-between px-3 pb-1 pt-3'>
           <div>
-            <CardTitle className='text-2xl'>
+            <CardTitle className='text-2xl flex items-center'>
               {transaction.productName}
               <Pencil
                 onClick={() => openEditDialog(transaction)}
+                className='h-4 w-4 ml-2 cursor-pointer inline-block'
+              />
+              <Trash
+                onClick={() => openDeleteDialog(transaction)}
                 className='h-4 w-4 ml-2 cursor-pointer inline-block'
               />
             </CardTitle>

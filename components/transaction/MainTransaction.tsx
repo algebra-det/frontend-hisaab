@@ -7,30 +7,31 @@ import EditTransaction from "@/components/transaction/EditTransaction";
 // import TransactionTable from "@/components/transaction/TransactionTable";
 import { useEffect, useState } from "react";
 import { Transaction } from "@/types";
+import DeleteTransaction from "./DeleteTransaction";
 
 export default function MainTransaction() {
+  const limit = 2;
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [error, setError] = useState("");
   const [fetching, setFetching] = useState(true);
+  const [offset, setOffset] = useState(0);
   const [transactionData, setTransactionData] = useState({
     data: [],
     totalProfit: 0,
   });
-  const [edit, setEdit] = useState({
-    id: 9,
-    productName: "fzs 4",
-    purchasePrice: 1000,
-    sellingPrice: 1300,
-    profit: 300,
-    createdAt: "2023-10-22T18:47:29.703Z",
-    updatedAt: "2023-10-22T18:47:29.703Z",
-    createdBy: 2,
-  });
+  const [edit, setEdit] = useState({} as Transaction);
   function openEditDialog(editedTransaction: Transaction) {
     setEdit(editedTransaction);
     setTimeout(() => {
       setOpen(true);
+    }, 100);
+  }
+  function openDeleteDialog(editedTransaction: Transaction) {
+    setEdit(editedTransaction);
+    setTimeout(() => {
+      setOpenDelete(true);
     }, 100);
   }
 
@@ -74,7 +75,13 @@ export default function MainTransaction() {
           {open && (
             <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
           )}
-          {error && <p>{error}</p>}
+          {openDelete && (
+            <DeleteTransaction
+              transaction={edit}
+              openDelete={openDelete}
+              setOpenDelete={setOpenDelete}
+            />
+          )}
           <>
             <p className='mt-3 mb-2'>
               Total Profit: &#8377;{transactionData.totalProfit}
@@ -82,10 +89,12 @@ export default function MainTransaction() {
             <TransactionsListWithCards
               transactions={transactionData.data}
               openEditDialog={openEditDialog}
+              openDeleteDialog={openDeleteDialog}
             />
           </>
         </>
       )}
+      {error && <p>{error}</p>}
     </>
   );
 }

@@ -4,9 +4,11 @@ import { Transaction } from "@/types";
 function TransactionsListWithCards({
   transactions,
   openEditDialog,
+  openDeleteDialog,
 }: {
   transactions: Transaction[];
   openEditDialog: (transaction: Transaction) => void;
+  openDeleteDialog: (transaction: Transaction) => void;
 }) {
   return (
     <>
@@ -17,6 +19,7 @@ function TransactionsListWithCards({
               <TransactionCard
                 transaction={q}
                 openEditDialog={openEditDialog}
+                openDeleteDialog={openDeleteDialog}
               />
             </div>
           ))}
