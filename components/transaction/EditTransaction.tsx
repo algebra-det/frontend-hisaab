@@ -27,7 +27,10 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const formSchema = z.object({
-  productName: z.string().min(5, "Product Name is required"),
+  productName: z
+    .string()
+    .min(5, "Product Name is required")
+    .max(64, "Product name can't be more than 64 characters"),
   sellingPrice: z.string().refine(
     (v) => {
       let n = Number(v);
