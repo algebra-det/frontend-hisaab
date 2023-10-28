@@ -6,11 +6,16 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Container from "./Container";
 import { Menu, Moon, Sun } from "lucide-react";
 import ProfileButton from "./ProfileButton";
+import { useState } from "react";
 
 const routes = [
   {
+    href: "/login",
+    label: "Login",
+  },
+  {
     href: "/signup",
-    label: "Sing Up",
+    label: "Sign Up",
   },
   {
     href: "/transactions",
@@ -24,13 +29,14 @@ const routes = [
 
 function Header() {
   const { theme, setTheme } = useTheme();
+  const [openSheet, setOpenSheet] = useState(false);
 
   return (
     <header className='sm:flex sm:justify-between py-3 px-4 border-b'>
       <Container>
         <div className='relative px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between w-full'>
           <div className='flex items-center'>
-            <Sheet>
+            <Sheet open={openSheet} onOpenChange={setOpenSheet}>
               <SheetTrigger>
                 <Menu className='h-6 md:hidden w-6' />
               </SheetTrigger>
@@ -42,6 +48,7 @@ function Header() {
                       key={i}
                       href={route.href}
                       className='block px-2 py-1 text-lg'
+                      onClick={() => setOpenSheet(false)}
                     >
                       {route.label}
                     </Link>
