@@ -1,5 +1,5 @@
 import TransactionCard from "./TransactionCard";
-import dummyTransactions from "@/lib/dummyTransactions";
+const dummyTransactions = require("@/lib/dummyTransactions");
 
 import { Transaction } from "@/types";
 function Transactions({
