@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Transaction } from "@/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getCookie } from "cookies-next";
 import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -54,10 +55,12 @@ export default function DialogDemo({
   transaction,
   open,
   setOpen,
+  refetchTransactions,
 }: {
   transaction: Transaction;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  refetchTransactions: () => void;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,21 +73,26 @@ export default function DialogDemo({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    let auth = getCookie("authorization");
+    if (!auth) auth = "";
     console.log("props are : ", values);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
+        `${process.env.NEXT_PUBLIC_API_URL}/transactions/${transaction.id}`,
         {
           headers: {
+            Authorization: JSON.parse(JSON.stringify(auth)),
             "content-type": "application/json",
           },
-          method: "POST",
+          method: "PUT",
           body: JSON.stringify(values),
         }
       );
       const newTransaction = await response.json();
       if (response.ok) {
         console.log("Response object: ", response.status, newTransaction);
+        refetchTransactions();
+        setOpen(false);
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),

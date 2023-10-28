@@ -18,13 +18,30 @@ export default function DialogDemo({
   transaction,
   openDelete,
   setOpenDelete,
+  refetchTransactions,
 }: {
   transaction: Transaction;
   openDelete: boolean;
   setOpenDelete: Dispatch<SetStateAction<boolean>>;
+  refetchTransactions: () => void;
 }) {
-  const authToken = getCookie("authorization");
+  const removeTransaction = async () => {
+    let auth = getCookie("authorization");
+    if (!auth) auth = "";
 
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/transactions/${transaction.id}`,
+      {
+        headers: {
+          Authorization: JSON.parse(JSON.stringify(auth)),
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      }
+    );
+    refetchTransactions();
+    setOpenDelete(false);
+  };
   return (
     <Dialog open={openDelete} onOpenChange={setOpenDelete}>
       <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
@@ -35,10 +52,18 @@ export default function DialogDemo({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button className='w-full' type='submit'>
+          <Button
+            className='w-full'
+            type='submit'
+            onClick={() => removeTransaction()}
+          >
             Yes
           </Button>
-          <Button className='w-full' type='reset'>
+          <Button
+            className='w-full'
+            type='reset'
+            onClick={() => setOpenDelete(false)}
+          >
             No
           </Button>
         </DialogFooter>

@@ -73,13 +73,19 @@ export default function MainTransaction() {
           {/* <TransactionTable /> */}
           <NewTransaction />
           {open && (
-            <EditTransaction transaction={edit} open={open} setOpen={setOpen} />
+            <EditTransaction
+              transaction={edit}
+              open={open}
+              setOpen={setOpen}
+              refetchTransactions={fetchTransactions}
+            />
           )}
           {openDelete && (
             <DeleteTransaction
               transaction={edit}
               openDelete={openDelete}
               setOpenDelete={setOpenDelete}
+              refetchTransactions={fetchTransactions}
             />
           )}
           <>
