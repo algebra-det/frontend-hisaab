@@ -19,7 +19,6 @@ export default function MainTransaction() {
   });
   const [open, setOpen] = useState(false);
   function openEditDialog(editedTransaction: Transaction) {
-    console.log("Transaction is: ", editedTransaction);
     setEdit(editedTransaction);
     setTimeout(() => {
       setOpen(true);

@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Pencil } from "lucide-react";
 import dayjs from "dayjs";
 
 import { Transaction } from "@/types";
@@ -24,6 +25,10 @@ export default function Transactions({
           <div>
             <CardTitle className='text-2xl'>
               {transaction.productName}
+              <Pencil
+                onClick={() => openEditDialog(transaction)}
+                className='h-4 w-4 ml-2 cursor-pointer inline-block'
+              />
             </CardTitle>
             <CardDescription>
               <p> Selling price: &#8377;{transaction.sellingPrice}</p>
@@ -35,10 +40,7 @@ export default function Transactions({
             <p className='text-sm text-muted-foreground'>Profit</p>
           </div>
         </CardHeader>
-        <CardFooter
-          className='px-3 py-1 text-sm text-muted-foreground'
-          onClick={() => openEditDialog(transaction)}
-        >
+        <CardFooter className='px-3 py-1 text-sm text-muted-foreground'>
           <p>{dayjs(transaction.updatedAt).format("DD/MM/YYYY hh:mm A")}</p>
         </CardFooter>
       </Card>
