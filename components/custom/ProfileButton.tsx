@@ -12,14 +12,15 @@ import { useContext } from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { User } from "@/types";
 
 function ProfileButton() {
   const router = useRouter();
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser } = useContext(userContext) as User;
 
   const handleLogout = () => {
     deleteCookie("authorization");
-    setUser({ name: "guest", token: "" });
+    setUser({ id: 0, name: "g", role: "", token: "" });
     router.push("/login?logout=success");
   };
   return (
