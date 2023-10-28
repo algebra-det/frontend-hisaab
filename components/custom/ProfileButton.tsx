@@ -12,7 +12,6 @@ import { useContext } from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User } from "@/types";
 
 function ProfileButton() {
   const router = useRouter();
