@@ -22,28 +22,35 @@ export default function Transactions({
 }) {
   return (
     <>
-      <Card className='sm:w-full'>
+      <Card className='w-full'>
         <CardHeader className='flex flex-row justify-between px-3 pb-1 pt-3'>
-          <div>
-            <CardTitle className='text-2xl flex items-center'>
-              {transaction.productName}
-              <Pencil
-                onClick={() => openEditDialog(transaction)}
-                className='h-4 w-4 ml-2 cursor-pointer inline-block'
-              />
-              <Trash
-                onClick={() => openDeleteDialog(transaction)}
-                className='h-4 w-4 ml-2 cursor-pointer inline-block'
-              />
+          <div className='w-full'>
+            <CardTitle className='text-lg sm:text-xl flex justify-between w-full align-top'>
+              <div>{transaction.productName}</div>
+              <div className='flex mt-2'>
+                <Pencil
+                  onClick={() => openEditDialog(transaction)}
+                  className='h-4 w-4 ml-2 cursor-pointer inline-block'
+                />
+                <Trash
+                  onClick={() => openDeleteDialog(transaction)}
+                  className='h-4 w-4 ml-2 cursor-pointer inline-block'
+                />
+              </div>
             </CardTitle>
-            <CardDescription>
-              <p> Selling price: &#8377;{transaction.sellingPrice}</p>
-              <p> Purchase Price: &#8377;{transaction.purchasePrice}</p>
+            <CardDescription className='flex flex-row justify-between w-full'>
+              <div>
+                <p> Selling price: &#8377;{transaction.sellingPrice}</p>
+                <p> Purchase Price: &#8377;{transaction.purchasePrice}</p>
+              </div>
+
+              <div>
+                <p className='text-lg sm:text-xl font-semibold text-white'>
+                  &#8377;{transaction.profit}
+                </p>
+                <p className='text-sm text-muted-foreground'>Profit</p>
+              </div>
             </CardDescription>
-          </div>
-          <div>
-            <p className='text-2xl'>&#8377;{transaction.profit}</p>
-            <p className='text-sm text-muted-foreground'>Profit</p>
           </div>
         </CardHeader>
         <CardFooter className='px-3 py-1 text-sm text-muted-foreground'>

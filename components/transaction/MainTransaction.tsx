@@ -92,7 +92,7 @@ export default function MainTransaction() {
           <>
             <p className='mt-3 mb-2'>
               Total Profit:{" "}
-              <span className='text-xl'>
+              <span className='text-xl font-semibold'>
                 {thousandSeparator(transactionData.totalProfit)}
               </span>
             </p>
