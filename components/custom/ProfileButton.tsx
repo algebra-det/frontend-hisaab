@@ -16,12 +16,14 @@ import { User } from "@/types";
 
 function ProfileButton() {
   const router = useRouter();
-  const { user, setUser } = useContext(userContext) as User;
+  const context = useContext(userContext);
 
   const handleLogout = () => {
     deleteCookie("authorization");
-    setUser({ id: 0, name: "g", role: "", token: "" });
-    router.push("/login?logout=success");
+    if (context) {
+      context.setUser({ id: 0, name: "g", role: "", token: "" });
+      router.push("/login?logout=success");
+    }
   };
   return (
     <DropdownMenu>
@@ -29,12 +31,14 @@ function ProfileButton() {
         <Avatar>
           {/* <AvatarImage src='https://github.com/shadcnj.png' /> */}
           <AvatarFallback>
-            {user && user.name.slice(0, 2).toUpperCase()}
+            {context &&
+              context.user &&
+              context.user.name.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {user && user.token ? (
+        {context && context.user && context.user.token ? (
           <>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
