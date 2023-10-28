@@ -44,7 +44,7 @@ export default function MainTransaction() {
     if (!auth) auth = "";
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
+      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=year`,
       {
         headers: {
           Authorization: JSON.parse(JSON.stringify(auth)),
