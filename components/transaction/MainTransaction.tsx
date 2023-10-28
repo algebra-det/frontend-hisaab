@@ -41,12 +41,15 @@ export default function MainTransaction() {
   const fetchTransactions = async () => {
     const auth = getCookie("authorization");
     console.log("Cookie: ", auth, typeof auth);
-    const response = await fetch("http://localhost:8000/transactions", {
-      headers: {
-        Authorization: JSON.parse(JSON.stringify(auth)),
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
+      {
+        headers: {
+          Authorization: JSON.parse(JSON.stringify(auth)),
+          "Content-Type": "application/json",
+        },
+      }
+    );
     console.log("response: ", response);
     if (response.ok) {
       const data = await response.json();
