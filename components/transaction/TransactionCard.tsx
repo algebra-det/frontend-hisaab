@@ -20,7 +20,7 @@ export default function Transactions({
       <Card className='sm:w-full'>
         <CardHeader className='flex flex-row justify-between px-3 pb-1 pt-3'>
           <div>
-            <CardTitle className='text-3xl'>
+            <CardTitle className='text-2xl'>
               {transaction.productName}
             </CardTitle>
             <CardDescription>
@@ -29,7 +29,7 @@ export default function Transactions({
             </CardDescription>
           </div>
           <div>
-            <p className='text-3xl'>&#8377;{transaction.profit}</p>
+            <p className='text-2xl'>&#8377;{transaction.profit}</p>
             <p className='text-sm text-muted-foreground'>Profit</p>
           </div>
         </CardHeader>
