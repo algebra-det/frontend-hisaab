@@ -24,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { getCookie } from "cookies-next";
+import { useState } from "react";
 
 const formSchema = z.object({
   productName: z.string().min(5, "Product Name is required"),
@@ -50,8 +51,13 @@ const formSchema = z.object({
   ),
 });
 
-export default function DialogDemo() {
+export default function DialogDemo({
+  refetchTransactions,
+}: {
+  refetchTransactions: () => void;
+}) {
   const authToken = getCookie("authorization");
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -79,6 +85,8 @@ export default function DialogDemo() {
       const newTransaction = await response.json();
       if (response.ok) {
         console.log("Response object: ", response.status, newTransaction);
+        refetchTransactions();
+        setOpen(false);
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
@@ -92,7 +100,7 @@ export default function DialogDemo() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant='outline'>Create New Transaction</Button>
       </DialogTrigger>

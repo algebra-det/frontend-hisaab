@@ -71,7 +71,7 @@ export default function MainTransaction() {
         <>
           <h1 className='text-3xl mb-4'>Transactions</h1>
           {/* <TransactionTable /> */}
-          <NewTransaction />
+          <NewTransaction refetchTransactions={fetchTransactions} />
           {open && (
             <EditTransaction
               transaction={edit}
