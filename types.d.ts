@@ -12,10 +12,7 @@ export interface Transaction {
 
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
+  name: string;
+  role: string;
+  token: string;
 }

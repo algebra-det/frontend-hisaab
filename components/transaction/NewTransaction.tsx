@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { getCookie } from "cookies-next";
 
 const formSchema = z.object({
   productName: z.string().min(5, "Product Name is required"),
@@ -50,6 +51,7 @@ const formSchema = z.object({
 });
 
 export default function DialogDemo() {
+  const authToken = getCookie("authorization");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,6 +69,7 @@ export default function DialogDemo() {
         `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
         {
           headers: {
+            Authorization: JSON.parse(JSON.stringify(authToken)),
             "content-type": "application/json",
           },
           method: "POST",
