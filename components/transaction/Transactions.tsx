@@ -1,7 +1,12 @@
 import TransactionCard from "./TransactionCard";
 import dummyTransactions from "@/lib/dummyTransactions";
+
 import { Transaction } from "@/types";
-function Transactions() {
+function Transactions({
+  openEditDialog,
+}: {
+  openEditDialog: (transaction: Transaction) => void;
+}) {
   const transactions: Transaction[] = dummyTransactions;
   return (
     <>
@@ -9,7 +14,10 @@ function Transactions() {
         <div>
           {transactions.map((q) => (
             <div className='mt-2' key={q.id}>
-              <TransactionCard transaction={q} />
+              <TransactionCard
+                transaction={q}
+                openEditDialog={openEditDialog}
+              />
             </div>
           ))}
         </div>

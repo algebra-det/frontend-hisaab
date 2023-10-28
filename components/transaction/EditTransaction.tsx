@@ -7,7 +7,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import {
@@ -19,8 +18,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Transaction } from "@/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -49,14 +50,22 @@ const formSchema = z.object({
   ),
 });
 
-export default function DialogDemo() {
+export default function DialogDemo({
+  transaction,
+  open,
+  setOpen,
+}: {
+  transaction: Transaction;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      productName: "",
-      sellingPrice: "",
-      purchasePrice: "",
-      profit: "",
+      productName: transaction.productName,
+      sellingPrice: transaction.sellingPrice.toString(),
+      purchasePrice: transaction.purchasePrice.toString(),
+      profit: transaction.profit.toString(),
     },
   });
 
@@ -79,7 +88,10 @@ export default function DialogDemo() {
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
-          message: newTransaction.message,
+          message:
+            newTransaction.message ||
+            newTransaction.data ||
+            "Something went wrong!",
         });
       }
       console.log("Response object: ", response.status, newTransaction);
@@ -89,15 +101,12 @@ export default function DialogDemo() {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='outline'>Create New Transaction</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
         <DialogHeader>
-          <DialogTitle>New Transaction: </DialogTitle>
+          <DialogTitle>Edit Transaction: </DialogTitle>
           <DialogDescription>
-            Add below details to create a new transaction.
+            Update below details to edit this transaction.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

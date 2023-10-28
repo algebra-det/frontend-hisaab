@@ -12,7 +12,9 @@ import { Transaction } from "@/types";
 
 export default function Transactions({
   transaction,
+  openEditDialog,
 }: {
+  openEditDialog: (transaction: Transaction) => void;
   transaction: Transaction;
 }) {
   return (
@@ -33,7 +35,10 @@ export default function Transactions({
             <p className='text-sm text-muted-foreground'>Profit</p>
           </div>
         </CardHeader>
-        <CardFooter className='px-3 py-1 text-sm text-muted-foreground'>
+        <CardFooter
+          className='px-3 py-1 text-sm text-muted-foreground'
+          onClick={() => openEditDialog(transaction)}
+        >
           <p>{dayjs(transaction.updatedAt).format("DD/MM/YYYY hh:mm A")}</p>
         </CardFooter>
       </Card>

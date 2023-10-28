@@ -9,12 +9,9 @@ import {
 } from "@/components/ui/table";
 import { Pencil, Trash2 } from "lucide-react";
 
-import dummyTransactions from "@/lib/dummyTransactions";
 import { Transaction } from "@/types";
 
-function transactionTable() {
-  const transactions: Transaction[] = dummyTransactions;
-
+function transactionTable({ transactions }: { transactions: Transaction[] }) {
   return (
     <div className='mt-5 grid place-content-center w-25'>
       <Table>
