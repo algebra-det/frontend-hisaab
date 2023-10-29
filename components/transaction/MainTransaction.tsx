@@ -173,7 +173,7 @@ export default function MainTransaction() {
               openEditDialog={openEditDialog}
               openDeleteDialog={openDeleteDialog}
             />
-            <div className="my-4 text-sm">More features coming soon...</div>
+            <div className="my-5"></div>
           </>
         </>
       )}
