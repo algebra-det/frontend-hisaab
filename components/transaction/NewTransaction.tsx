@@ -105,7 +105,9 @@ export default function DialogDemo({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='outline'>Create New Transaction</Button>
+        <Button className='mb-2' variant='outline'>
+          Create New Transaction
+        </Button>
       </DialogTrigger>
       <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
         <DialogHeader>

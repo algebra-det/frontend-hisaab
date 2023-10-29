@@ -15,17 +15,21 @@ function TransactionsListWithCards({
     <>
       <div className='w-80 sm:w-96 md:w-max md:max-w-md'>
         <div>
-          <ScrollArea className='h-96 rounded-xl border p-4'>
-            {transactions.map((q) => (
-              <div className='mt-2' key={q.id}>
-                <TransactionCard
-                  transaction={q}
-                  openEditDialog={openEditDialog}
-                  openDeleteDialog={openDeleteDialog}
-                />
-              </div>
-            ))}
-          </ScrollArea>
+          {transactions.length ? (
+            <ScrollArea className='h-96 rounded-xl border p-4'>
+              {transactions.map((q) => (
+                <div className='mt-2' key={q.id}>
+                  <TransactionCard
+                    transaction={q}
+                    openEditDialog={openEditDialog}
+                    openDeleteDialog={openDeleteDialog}
+                  />
+                </div>
+              ))}
+            </ScrollArea>
+          ) : (
+            <p className='grid place-content-center'>List is empty</p>
+          )}
         </div>
       </div>
     </>

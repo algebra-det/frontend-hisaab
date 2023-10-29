@@ -10,6 +10,8 @@ import { Transaction } from "@/types";
 import DeleteTransaction from "./DeleteTransaction";
 import { thousandSeparator } from "@/utils/currencyFormat";
 import Filter from "@/components/transaction/Filter";
+import dayjs from "dayjs";
+import { dateFormatAPI } from "@/config/format";
 
 export default function MainTransaction() {
   const limit = 10;
@@ -19,37 +21,44 @@ export default function MainTransaction() {
   const [error, setError] = useState("");
   const [fetching, setFetching] = useState(true);
   const [offset, setOffset] = useState(0);
+  const today = dayjs().format(dateFormatAPI);
+  const [duration, setDuration] = useState("day");
+  const [date, setDate] = useState(today);
+
   const [transactionData, setTransactionData] = useState({
     data: [],
     totalProfit: 0,
   });
   const [edit, setEdit] = useState({} as Transaction);
-  function openEditDialog(editedTransaction: Transaction) {
+  const openEditDialog = (editedTransaction: Transaction) => {
     setEdit(editedTransaction);
     setTimeout(() => {
       setOpen(true);
     }, 100);
-  }
-  function openDeleteDialog(editedTransaction: Transaction) {
+  };
+  const openDeleteDialog = (editedTransaction: Transaction) => {
     setEdit(editedTransaction);
     setTimeout(() => {
       setOpenDelete(true);
     }, 100);
-  }
-  function changeDuration(value: string) {
-    console.log("Value is : ", value);
-  }
+  };
+  const changeDuration = (value: string) => {
+    setDuration(value);
+  };
+  const changeDate = (value: string) => {
+    setDate(value);
+  };
 
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [date, duration]);
 
   const fetchTransactions = async () => {
     let auth = getCookie("authorization");
     if (!auth) auth = "";
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=year&limit=${limit}&offset=${offset}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=${duration}&workingDate=${date}&limit=${limit}&offset=${offset}`,
       {
         headers: {
           Authorization: JSON.parse(JSON.stringify(auth)),
@@ -93,7 +102,7 @@ export default function MainTransaction() {
             />
           )}
           <>
-            <Filter changeDuration={changeDuration} />
+            <Filter changeDate={changeDate} changeDuration={changeDuration} />
             <p className='mt-3 mb-2'>
               Total Profit:{" "}
               <span className='text-xl font-semibold'>

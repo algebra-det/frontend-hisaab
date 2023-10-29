@@ -9,6 +9,7 @@ import {
 import { Pencil, Trash } from "lucide-react";
 import dayjs from "dayjs";
 
+import { dateTimeFormatDisplay } from "@/config/format";
 import { Transaction } from "@/types";
 
 export default function Transactions({
@@ -54,7 +55,7 @@ export default function Transactions({
           </div>
         </CardHeader>
         <CardFooter className='px-3 py-1 text-sm text-muted-foreground'>
-          <p>{dayjs(transaction.updatedAt).format("DD/MM/YYYY hh:mm A")}</p>
+          <p>{dayjs(transaction.updatedAt).format(dateTimeFormatDisplay)}</p>
         </CardFooter>
       </Card>
     </>

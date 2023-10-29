@@ -12,6 +12,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { AdminUser } from "@/types";
 import dayjs from "dayjs";
+import { dateTimeFormatDisplay } from "@/config/format";
 
 function UsersTable({
   users,
@@ -41,7 +42,7 @@ function UsersTable({
               <TableCell>{q.email}</TableCell>
               <TableCell>{q.role}</TableCell>
               <TableCell>
-                {dayjs(q.updatedAt).format("DD/MM/YYYY hh:mm A")}
+                {dayjs(q.updatedAt).format(dateTimeFormatDisplay)}
               </TableCell>
               <TableCell className='text-right'>
                 <Switch
