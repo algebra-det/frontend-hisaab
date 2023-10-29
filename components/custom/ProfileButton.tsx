@@ -40,6 +40,7 @@ function ProfileButton() {
       setUser({
         id: 0,
         name: "g",
+        email: '',
         role: "",
         token: "",
       });
@@ -52,7 +53,7 @@ function ProfileButton() {
 
   const handleLogout = () => {
     deleteCookie("authorization");
-    setUser({ id: 0, name: "g", role: "", token: "" });
+    setUser({ id: 0, name: "g", email: '', role: "", token: "" });
     router.push("/login?logout=success");
   };
   return (

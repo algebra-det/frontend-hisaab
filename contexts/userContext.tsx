@@ -12,6 +12,7 @@ function Context({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>({
     id: 0,
     name: "g",
+    email: '',
     role: "",
     token: "",
   });

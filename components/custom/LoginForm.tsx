@@ -57,7 +57,7 @@ function LoginForm() {
         setCookie("authorization", `Bearer ${loginResponse.data.token}`);
         setUser(loginResponse.data);
         if(loginResponse.data.role === 'client') router.push("/transactions");
-        else router.push('/admin')
+        else router.push('/admin/users')
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
