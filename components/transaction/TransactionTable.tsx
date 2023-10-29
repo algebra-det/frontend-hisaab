@@ -11,9 +11,19 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { Transaction } from "@/types";
 
-function transactionTable({ transactions }: { transactions: Transaction[] }) {
+function transactionTable({
+  transactions,
+
+  openEditDialog,
+  openDeleteDialog,
+}: {
+  transactions: Transaction[];
+
+  openEditDialog: (transaction: Transaction) => void;
+  openDeleteDialog: (transaction: Transaction) => void;
+}) {
   return (
-    <div className='mt-5 grid place-content-center w-25'>
+    <div className='mt-5 grid place-content-center w-25 hidden sm:block'>
       <Table>
         <TableCaption>A list of your recent transactions.</TableCaption>
         <TableHeader>
@@ -33,8 +43,14 @@ function transactionTable({ transactions }: { transactions: Transaction[] }) {
               <TableCell>{q.sellingPrice}</TableCell>
               <TableCell className='text-right'>{q.profit}</TableCell>
               <TableCell className='text-right flex justify-around ml-2'>
-                <Pencil className='h-4 w-4 cursor-pointer' />
-                <Trash2 className='h-4 w-4 cursor-pointer' />
+                <Pencil
+                  onClick={() => openEditDialog(q)}
+                  className='h-4 w-4 cursor-pointer'
+                />
+                <Trash2
+                  onClick={() => openDeleteDialog(q)}
+                  className='h-4 w-4 cursor-pointer'
+                />
               </TableCell>
             </TableRow>
           ))}

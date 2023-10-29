@@ -13,7 +13,7 @@ function TransactionsListWithCards({
 }) {
   return (
     <>
-      <div className='w-80 sm:w-96 md:w-max md:max-w-md'>
+      <div className='w-80 sm:w-full md:w-full md:max-w-full md:hidden'>
         <div>
           {transactions.length ? (
             <ScrollArea className='h-96 rounded-xl border p-4'>

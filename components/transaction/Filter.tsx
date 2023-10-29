@@ -22,7 +22,7 @@ export function Filter({
   changeDate: (value: string) => void;
 }) {
   return (
-    <div className='flex'>
+    <div className='flex mb-2'>
       <Select defaultValue='day' onValueChange={changeDuration}>
         <SelectTrigger className='w-2/6'>
           <SelectValue placeholder='Select a duration' />

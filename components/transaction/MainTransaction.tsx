@@ -12,6 +12,7 @@ import { thousandSeparator } from "@/utils/currencyFormat";
 import Filter from "@/components/transaction/Filter";
 import dayjs from "dayjs";
 import { dateFormatAPI } from "@/config/format";
+import TransactionTable from "./TransactionTable";
 
 export default function MainTransaction() {
   const limit = 10;
@@ -110,7 +111,13 @@ export default function MainTransaction() {
       {!fetching && (
         <>
           <h1 className='text-3xl mb-4'>Transactions</h1>
-          {/* <TransactionTable /> */}
+
+          <p className='mt-3 mb-2'>
+            Total Profit:{" "}
+            <span className='text-xl font-semibold'>
+              {thousandSeparator(transactionData.totalProfit)}
+            </span>
+          </p>
           {open && (
             <EditTransaction
               transaction={edit}
@@ -129,14 +136,15 @@ export default function MainTransaction() {
           )}
           <>
             <Filter changeDate={changeDate} changeDuration={changeDuration} />
-            <p className='mt-3 mb-2'>
-              Total Profit:{" "}
-              <span className='text-xl font-semibold'>
-                {thousandSeparator(transactionData.totalProfit)}
-              </span>
-            </p>
 
             <NewTransaction addNewTransaction={addNewTransaction} />
+
+            <TransactionTable
+              transactions={transactionData.data}
+              openEditDialog={openEditDialog}
+              openDeleteDialog={openDeleteDialog}
+            />
+
             <TransactionsListWithCards
               transactions={transactionData.data}
               openEditDialog={openEditDialog}

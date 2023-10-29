@@ -18,7 +18,7 @@ export function DatePicker({
   changeDate: (value: string) => void;
 }) {
   const today = new Date();
-  const [date, setDate] = useState<Date>(today);
+  const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
