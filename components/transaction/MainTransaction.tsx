@@ -131,9 +131,9 @@ export default function MainTransaction() {
     <>
       {!fetching && (
         <>
-          <h1 className='text-3xl mb-1 sm:mb-2 md:mb-4'>Transactions</h1>
+          <h1 className='text-3xl'>Transactions</h1>
 
-          <p className='mt-3 mb-2'>
+          <p className='my-2'>
             Total Profit:{" "}
             <span className='text-xl font-semibold'>
               {thousandSeparator(transactionData.totalProfit)}
