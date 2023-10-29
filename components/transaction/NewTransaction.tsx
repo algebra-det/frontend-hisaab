@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { getCookie } from "cookies-next";
 import { useState } from "react";
+import { Transaction } from "@/types";
 
 const formSchema = z.object({
   productName: z
@@ -55,9 +56,9 @@ const formSchema = z.object({
 });
 
 export default function DialogDemo({
-  refetchTransactions,
+  addNewTransaction,
 }: {
-  refetchTransactions: () => void;
+  addNewTransaction: (transaction: Transaction) => void;
 }) {
   const authToken = getCookie("authorization");
   const [open, setOpen] = useState(false);
@@ -88,7 +89,7 @@ export default function DialogDemo({
       const newTransaction = await response.json();
       if (response.ok) {
         console.log("Response object: ", response.status, newTransaction);
-        refetchTransactions();
+        addNewTransaction(newTransaction.data);
         setOpen(false);
       } else {
         form.setError("root.serverError", {

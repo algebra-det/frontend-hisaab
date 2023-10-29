@@ -44,23 +44,23 @@ export default function DialogDemo({
   };
   return (
     <Dialog open={openDelete} onOpenChange={setOpenDelete}>
-      <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
+      <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
         <DialogHeader>
           <DialogTitle>Delete Transaction: </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete {transaction.productName} ?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className='flex flex-row'>
           <Button
-            className='w-full'
+            className='w-1/4'
             type='submit'
             onClick={() => removeTransaction()}
           >
             Yes
           </Button>
           <Button
-            className='w-full'
+            className='w-3/4 ml-1'
             type='reset'
             onClick={() => setOpenDelete(false)}
           >

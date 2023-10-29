@@ -58,12 +58,12 @@ export default function DialogDemo({
   transaction,
   open,
   setOpen,
-  refetchTransactions,
+  updateTransaction,
 }: {
   transaction: Transaction;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  refetchTransactions: () => void;
+  updateTransaction: (transaction: Transaction) => void;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -91,21 +91,21 @@ export default function DialogDemo({
           body: JSON.stringify(values),
         }
       );
-      const newTransaction = await response.json();
+      let updatedTransaction = await response.json();
       if (response.ok) {
-        console.log("Response object: ", response.status, newTransaction);
-        refetchTransactions();
+        console.log("Response object: ", response.status, updatedTransaction);
+        updateTransaction(updatedTransaction.data);
         setOpen(false);
       } else {
         form.setError("root.serverError", {
           type: response.status.toString(),
           message:
-            newTransaction.message ||
-            newTransaction.data ||
+            updatedTransaction.message ||
+            updatedTransaction.data ||
             "Something went wrong!",
         });
       }
-      console.log("Response object: ", response.status, newTransaction);
+      console.log("Response object: ", response.status, updatedTransaction);
     } catch (error) {
       console.log("Error while loggin in: ", error);
     }
@@ -113,7 +113,7 @@ export default function DialogDemo({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
+      <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
         <DialogHeader>
           <DialogTitle>Edit Transaction: </DialogTitle>
           <DialogDescription>

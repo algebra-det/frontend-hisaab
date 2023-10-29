@@ -26,7 +26,7 @@ export default function MainTransaction() {
   const [date, setDate] = useState(today);
 
   const [transactionData, setTransactionData] = useState({
-    data: [],
+    data: [] as Transaction[],
     totalProfit: 0,
   });
   const [edit, setEdit] = useState({} as Transaction);
@@ -79,6 +79,32 @@ export default function MainTransaction() {
     }
   };
 
+  const addNewTransaction = (transaction: Transaction) => {
+    if (!dayjs(today).isSame(dayjs(date))) return;
+    const newProfit = transactionData.totalProfit + transaction.profit;
+    setTransactionData({
+      data: [transaction, ...transactionData.data],
+      totalProfit: newProfit,
+    });
+  };
+
+  const updateTransaction = (transaction: Transaction) => {
+    let oldTransaction = {} as Transaction;
+    const allTransactions = transactionData.data.map((q) => {
+      if (q.id === transaction.id) {
+        oldTransaction = q;
+        return transaction;
+      }
+      return q;
+    });
+    const newProfit =
+      transactionData.totalProfit - oldTransaction.profit + transaction.profit;
+    setTransactionData({
+      data: allTransactions,
+      totalProfit: newProfit,
+    });
+  };
+
   return (
     <>
       {!fetching && (
@@ -90,7 +116,7 @@ export default function MainTransaction() {
               transaction={edit}
               open={open}
               setOpen={setOpen}
-              refetchTransactions={fetchTransactions}
+              updateTransaction={updateTransaction}
             />
           )}
           {openDelete && (
@@ -110,7 +136,7 @@ export default function MainTransaction() {
               </span>
             </p>
 
-            <NewTransaction refetchTransactions={fetchTransactions} />
+            <NewTransaction addNewTransaction={addNewTransaction} />
             <TransactionsListWithCards
               transactions={transactionData.data}
               openEditDialog={openEditDialog}
