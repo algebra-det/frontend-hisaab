@@ -30,7 +30,7 @@ import { Transaction } from "@/types";
 const formSchema = z.object({
   productName: z
     .string()
-    .min(5, "Product Name is required")
+    .min(1, "Product Name is required")
     .max(64, "Product name can't be more than 64 characters"),
   sellingPrice: z.string().refine(
     (v) => {
