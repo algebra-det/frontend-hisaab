@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Transaction } from "@/types";
 import DeleteTransaction from "./DeleteTransaction";
 import { thousandSeparator } from "@/utils/currencyFormat";
+import Filter from "@/components/transaction/Filter";
 
 export default function MainTransaction() {
   const limit = 10;
@@ -34,6 +35,9 @@ export default function MainTransaction() {
     setTimeout(() => {
       setOpenDelete(true);
     }, 100);
+  }
+  function changeDuration(value: string) {
+    console.log("Value is : ", value);
   }
 
   useEffect(() => {
@@ -89,6 +93,7 @@ export default function MainTransaction() {
             />
           )}
           <>
+            <Filter changeDuration={changeDuration} />
             <p className='mt-3 mb-2'>
               Total Profit:{" "}
               <span className='text-xl font-semibold'>
