@@ -4,12 +4,16 @@ import TransactionCard from "./TransactionCard";
 import { Transaction } from "@/types";
 function TransactionsListWithCards({
   transactions,
+  canLoadMore,
   openEditDialog,
   openDeleteDialog,
+  fetchMoreTransactions,
 }: {
   transactions: Transaction[];
+  canLoadMore: boolean;
   openEditDialog: (transaction: Transaction) => void;
   openDeleteDialog: (transaction: Transaction) => void;
+  fetchMoreTransactions: (value: boolean) => void;
 }) {
   return (
     <>
@@ -26,6 +30,14 @@ function TransactionsListWithCards({
                   />
                 </div>
               ))}
+              {canLoadMore && (
+                <p
+                  className='grid place-content-center mt-2 cursor-pointer'
+                  onClick={() => fetchMoreTransactions(true)}
+                >
+                  Load more...
+                </p>
+              )}
             </ScrollArea>
           ) : (
             <p className='grid place-content-center'>List is empty</p>

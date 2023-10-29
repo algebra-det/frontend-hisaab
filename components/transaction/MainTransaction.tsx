@@ -25,10 +25,12 @@ export default function MainTransaction() {
   const today = dayjs().format(dateFormatAPI);
   const [duration, setDuration] = useState("day");
   const [date, setDate] = useState(today);
+  const [loadMore, setLoadMore] = useState(false);
 
   const [transactionData, setTransactionData] = useState({
     data: [] as Transaction[],
     totalProfit: 0,
+    count: 0,
   });
   const [edit, setEdit] = useState({} as Transaction);
   const openEditDialog = (editedTransaction: Transaction) => {
@@ -54,12 +56,17 @@ export default function MainTransaction() {
     fetchTransactions();
   }, [date, duration]);
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async (page?: boolean) => {
     let auth = getCookie("authorization");
+    if (page) setOffset(offset + limit);
     if (!auth) auth = "";
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=${duration}&workingDate=${date}&limit=${limit}&offset=${offset}`,
+      `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/transactions?dateRange=${duration}&workingDate=${date}&limit=${limit}&offset=${
+        page ? offset + limit : offset
+      }`,
       {
         headers: {
           Authorization: JSON.parse(JSON.stringify(auth)),
@@ -71,7 +78,13 @@ export default function MainTransaction() {
     if (response.ok) {
       const data = await response.json();
       console.log("Transactions are: ", data);
-      setTransactionData(data);
+      if (!page) setTransactionData(data);
+      else {
+        setTransactionData({
+          ...transactionData,
+          data: [...transactionData.data, ...data.data],
+        });
+      }
       setFetching(false);
     } else if (response.status === 401) {
       router.push("/login");
@@ -80,10 +93,17 @@ export default function MainTransaction() {
     }
   };
 
+  useEffect(() => {
+    setLoadMore(
+      !!Math.floor(transactionData.count % transactionData.data.length)
+    );
+  }, [transactionData]);
+
   const addNewTransaction = (transaction: Transaction) => {
     if (!dayjs(today).isSame(dayjs(date))) return;
     const newProfit = transactionData.totalProfit + transaction.profit;
     setTransactionData({
+      ...transactionData,
       data: [transaction, ...transactionData.data],
       totalProfit: newProfit,
     });
@@ -101,6 +121,7 @@ export default function MainTransaction() {
     const newProfit =
       transactionData.totalProfit - oldTransaction.profit + transaction.profit;
     setTransactionData({
+      ...transactionData,
       data: allTransactions,
       totalProfit: newProfit,
     });
@@ -147,6 +168,8 @@ export default function MainTransaction() {
 
             <TransactionsListWithCards
               transactions={transactionData.data}
+              canLoadMore={loadMore}
+              fetchMoreTransactions={fetchTransactions}
               openEditDialog={openEditDialog}
               openDeleteDialog={openDeleteDialog}
             />
