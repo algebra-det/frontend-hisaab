@@ -7,13 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Switch } from "@/components/ui/switch";
 import { Pencil, Trash2 } from "lucide-react";
 
 import { AdminUser } from "@/types";
+import dayjs from "dayjs";
 
-function UsersTable({ transactions }: { transactions: AdminUser[] }) {
+function UsersTable({
+  users,
+  handleUserActiveChange,
+}: {
+  users: AdminUser[];
+  handleUserActiveChange: (value: boolean, user: AdminUser) => void;
+}) {
   return (
-    <div className='mt-5 grid place-content-center w-25'>
+    <div>
       <Table>
         <TableCaption>A list of Admin Users.</TableCaption>
         <TableHeader>
@@ -21,20 +29,31 @@ function UsersTable({ transactions }: { transactions: AdminUser[] }) {
             <TableHead className='w-fit'>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
+            <TableHead className='ml-10 w-fit'>Updated At</TableHead>
             <TableHead className='ml-10 text-right'>Active</TableHead>
             <TableHead className='w-24'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions.map((q) => (
+          {users.map((q) => (
             <TableRow key={q.id}>
               <TableCell className='font-medium'>{q.name}</TableCell>
               <TableCell>{q.email}</TableCell>
               <TableCell>{q.role}</TableCell>
-              <TableCell className='text-right'>{q.active}</TableCell>
+              <TableCell>
+                {dayjs(q.updatedAt).format("DD/MM/YYYY hh:mm A")}
+              </TableCell>
+              <TableCell className='text-right'>
+                <Switch
+                  id={`${q.id}-user`}
+                  className='cursor-pointer'
+                  checked={q.active}
+                  onCheckedChange={(value) => handleUserActiveChange(value, q)}
+                />
+              </TableCell>
               <TableCell className='text-right flex justify-around ml-2'>
                 <Pencil className='h-4 w-4 cursor-pointer' />
-                <Trash2 className='h-4 w-4 cursor-pointer' />
+                <Trash2 className='ml-4 h-4 w-4 cursor-pointer' />
               </TableCell>
             </TableRow>
           ))}

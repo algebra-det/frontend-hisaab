@@ -13,11 +13,13 @@ export interface Transaction {
 export interface User {
   id: number;
   name: string;
-  email: string,
+  email: string;
   role: string;
   token: string;
 }
 
 export interface AdminUser extends User {
-  active: boolean
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
