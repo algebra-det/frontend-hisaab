@@ -61,7 +61,7 @@ function ProfileButton() {
         <Avatar>
           {/* <AvatarImage src='https://github.com/shadcnj.png' /> */}
           <AvatarFallback>
-            {user?.name.slice(0, 2).toUpperCase()}
+            {user?.name?.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

@@ -22,7 +22,7 @@ export default function Transactions({
 }) {
   return (
     <>
-      <Card className='w-full'>
+      <Card className='w-full md:w-96'>
         <CardHeader className='flex flex-row justify-between px-3 pb-1 pt-3'>
           <div className='w-full'>
             <CardTitle className='text-md sm:text-lg md:text-xl flex justify-between w-full align-top'>
