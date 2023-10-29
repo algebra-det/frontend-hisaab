@@ -72,7 +72,6 @@ export default function MainTransaction() {
         <>
           <h1 className='text-3xl mb-4'>Transactions</h1>
           {/* <TransactionTable /> */}
-          <NewTransaction refetchTransactions={fetchTransactions} />
           {open && (
             <EditTransaction
               transaction={edit}
@@ -96,6 +95,8 @@ export default function MainTransaction() {
                 {thousandSeparator(transactionData.totalProfit)}
               </span>
             </p>
+
+            <NewTransaction refetchTransactions={fetchTransactions} />
             <TransactionsListWithCards
               transactions={transactionData.data}
               openEditDialog={openEditDialog}
