@@ -131,7 +131,7 @@ export default function MainTransaction() {
     <>
       {!fetching && (
         <>
-          <h1 className='text-3xl mb-4'>Transactions</h1>
+          <h1 className='text-3xl mb-1 sm:mb-2 md:mb-4'>Transactions</h1>
 
           <p className='mt-3 mb-2'>
             Total Profit:{" "}
