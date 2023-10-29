@@ -113,7 +113,7 @@ export default function DialogDemo({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
+      <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625px] lg:max-w-[625px]'>
         <DialogHeader>
           <DialogTitle>Edit Transaction: </DialogTitle>
           <DialogDescription>
