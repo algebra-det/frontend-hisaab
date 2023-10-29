@@ -110,7 +110,7 @@ export default function DialogDemo({
           Create New Transaction
         </Button>
       </DialogTrigger>
-      <DialogContent className='max-w-[325] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
+      <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625] lg:max-w-[625]'>
         <DialogHeader>
           <DialogTitle>New Transaction: </DialogTitle>
           <DialogDescription>
