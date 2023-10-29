@@ -11,7 +11,7 @@ import DeleteTransaction from "./DeleteTransaction";
 import { thousandSeparator } from "@/utils/currencyFormat";
 
 export default function MainTransaction() {
-  const limit = 2;
+  const limit = 10;
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -45,7 +45,7 @@ export default function MainTransaction() {
     if (!auth) auth = "";
     console.log("Cookie: ", auth, typeof auth);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=year`,
+      `${process.env.NEXT_PUBLIC_API_URL}/transactions?dateRange=year&limit=${limit}&offset=${offset}`,
       {
         headers: {
           Authorization: JSON.parse(JSON.stringify(auth)),
