@@ -167,6 +167,7 @@ export default function DialogDemo({
               )}
             />
             <FormField
+              className='hidden'
               control={form.control}
               name='profit'
               render={({ field }) => (
