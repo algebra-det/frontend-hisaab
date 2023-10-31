@@ -23,7 +23,7 @@ function transactionTable({
   openDeleteDialog: (transaction: Transaction) => void;
 }) {
   return (
-    <div className='mt-5 grid place-content-center w-25 hidden md:block'>
+    <div className='mt-5 place-content-center w-25 hidden md:grid'>
       <Table>
         <TableCaption>A list of your recent transactions.</TableCaption>
         <TableHeader>
