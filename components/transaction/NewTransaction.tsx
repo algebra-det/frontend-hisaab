@@ -164,11 +164,10 @@ export default function DialogDemo({
               )}
             />
             <FormField
-              className='hidden'
               control={form.control}
               name='profit'
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='hidden'>
                   <FormLabel>Profit</FormLabel>
                   <FormControl>
                     <Input type='number' placeholder='0' {...field} />
