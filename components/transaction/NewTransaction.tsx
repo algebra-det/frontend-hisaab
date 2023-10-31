@@ -68,7 +68,7 @@ export default function DialogDemo({
       productName: "",
       sellingPrice: "",
       purchasePrice: "",
-      profit: "",
+      profit: "100",
     },
   });
 
@@ -164,6 +164,7 @@ export default function DialogDemo({
               )}
             />
             <FormField
+              className='hidden'
               control={form.control}
               name='profit'
               render={({ field }) => (
