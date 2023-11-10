@@ -6,10 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
+} from '@/components/ui/table'
+import { Pencil, Trash2 } from 'lucide-react'
+import dayjs from 'dayjs'
 
-import { Transaction } from "@/types";
+import { Transaction } from '@/types'
+import { dateTimeFormatDisplay } from '@/config/format'
 
 function transactionTable({
   transactions,
@@ -17,10 +19,10 @@ function transactionTable({
   openEditDialog,
   openDeleteDialog,
 }: {
-  transactions: Transaction[];
+  transactions: Transaction[]
 
-  openEditDialog: (transaction: Transaction) => void;
-  openDeleteDialog: (transaction: Transaction) => void;
+  openEditDialog: (transaction: Transaction) => void
+  openDeleteDialog: (transaction: Transaction) => void
 }) {
   return (
     <div className='mt-5 place-content-center w-25 hidden md:grid'>
@@ -31,16 +33,20 @@ function transactionTable({
             <TableHead className='w-fit'>Product Name</TableHead>
             <TableHead>Purchase Price</TableHead>
             <TableHead>Selling Price</TableHead>
+            <TableHead>Created At</TableHead>
             <TableHead className='ml-10 text-right'>Profit</TableHead>
             <TableHead className='w-24'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {transactions.map((q) => (
+          {transactions.map(q => (
             <TableRow key={q.id}>
               <TableCell className='font-medium'>{q.productName}</TableCell>
               <TableCell>{q.purchasePrice}</TableCell>
               <TableCell>{q.sellingPrice}</TableCell>
+              <TableCell>
+                {dayjs(q.createdAt).format(dateTimeFormatDisplay)}
+              </TableCell>
               <TableCell className='text-right'>{q.profit}</TableCell>
               <TableCell className='text-right flex justify-around ml-2'>
                 <Pencil
@@ -57,7 +63,7 @@ function transactionTable({
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }
 
-export default transactionTable;
+export default transactionTable
