@@ -137,56 +137,53 @@ export default function MainTransaction() {
 
   return (
     <>
-      {fetching ? (
-        <Loading />
-      ) : (
+      {fetching && <Loading />}
+      <>
+        <h1 className='text-3xl'>Transactions</h1>
+
+        <p className='my-2'>
+          Total Profit:{' '}
+          <span className='text-xl font-semibold'>
+            {thousandSeparator(transactionData.totalProfit)}
+          </span>
+        </p>
+        {open && (
+          <EditTransaction
+            transaction={edit}
+            open={open}
+            setOpen={setOpen}
+            updateTransaction={updateTransaction}
+          />
+        )}
+        {openDelete && (
+          <DeleteTransaction
+            transaction={edit}
+            openDelete={openDelete}
+            setOpenDelete={setOpenDelete}
+            refetchTransactions={fetchTransactions}
+          />
+        )}
         <>
-          <h1 className='text-3xl'>Transactions</h1>
+          <Filter changeDate={changeDate} changeDuration={changeDuration} />
 
-          <p className='my-2'>
-            Total Profit:{' '}
-            <span className='text-xl font-semibold'>
-              {thousandSeparator(transactionData.totalProfit)}
-            </span>
-          </p>
-          {open && (
-            <EditTransaction
-              transaction={edit}
-              open={open}
-              setOpen={setOpen}
-              updateTransaction={updateTransaction}
-            />
-          )}
-          {openDelete && (
-            <DeleteTransaction
-              transaction={edit}
-              openDelete={openDelete}
-              setOpenDelete={setOpenDelete}
-              refetchTransactions={fetchTransactions}
-            />
-          )}
-          <>
-            <Filter changeDate={changeDate} changeDuration={changeDuration} />
+          <NewTransaction addNewTransaction={addNewTransaction} />
 
-            <NewTransaction addNewTransaction={addNewTransaction} />
+          <TransactionTable
+            transactions={transactionData.data}
+            openEditDialog={openEditDialog}
+            openDeleteDialog={openDeleteDialog}
+          />
 
-            <TransactionTable
-              transactions={transactionData.data}
-              openEditDialog={openEditDialog}
-              openDeleteDialog={openDeleteDialog}
-            />
-
-            <TransactionsListWithCards
-              transactions={transactionData.data}
-              canLoadMore={loadMore}
-              fetchMoreTransactions={fetchTransactions}
-              openEditDialog={openEditDialog}
-              openDeleteDialog={openDeleteDialog}
-            />
-            <div className='my-5'></div>
-          </>
+          <TransactionsListWithCards
+            transactions={transactionData.data}
+            canLoadMore={loadMore}
+            fetchMoreTransactions={fetchTransactions}
+            openEditDialog={openEditDialog}
+            openDeleteDialog={openDeleteDialog}
+          />
+          <div className='my-5'></div>
         </>
-      )}
+      </>
       {error && <p>{error}</p>}
     </>
   )
