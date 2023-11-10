@@ -5,21 +5,21 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Pencil, Trash } from "lucide-react";
-import dayjs from "dayjs";
+} from '@/components/ui/card'
+import { Pencil, Trash } from 'lucide-react'
+import dayjs from 'dayjs'
 
-import { dateTimeFormatDisplay } from "@/config/format";
-import { Transaction } from "@/types";
+import { dateTimeFormatDisplay } from '@/config/format'
+import { Transaction } from '@/types'
 
 export default function Transactions({
   transaction,
   openEditDialog,
   openDeleteDialog,
 }: {
-  openEditDialog: (transaction: Transaction) => void;
-  openDeleteDialog: (transaction: Transaction) => void;
-  transaction: Transaction;
+  openEditDialog: (transaction: Transaction) => void
+  openDeleteDialog: (transaction: Transaction) => void
+  transaction: Transaction
 }) {
   return (
     <>
@@ -55,9 +55,9 @@ export default function Transactions({
           </div>
         </CardHeader>
         <CardFooter className='px-3 py-1 text-sm text-muted-foreground'>
-          <p>{dayjs(transaction.updatedAt).format(dateTimeFormatDisplay)}</p>
+          <p>{dayjs(transaction.createdAt).format(dateTimeFormatDisplay)}</p>
         </CardFooter>
       </Card>
     </>
-  );
+  )
 }
