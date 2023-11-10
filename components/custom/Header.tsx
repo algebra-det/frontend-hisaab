@@ -1,31 +1,31 @@
-"use client";
-import Link from "next/link";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Container from "./Container";
-import { Menu, Moon, Sun } from "lucide-react";
-import ProfileButton from "./ProfileButton";
-import { useState } from "react";
-import Context from "@/contexts/userContext";
+'use client'
+import Link from 'next/link'
+import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import Container from './Container'
+import { Menu, Moon, Sun } from 'lucide-react'
+import ProfileButton from './ProfileButton'
+import { useState } from 'react'
+import UserContext from '@/contexts/userContext'
 
 const routes = [
   {
-    href: "/transactions",
-    label: "Transactions",
+    href: '/transactions',
+    label: 'Transactions',
   },
   {
-    href: "/products",
-    label: "Products",
+    href: '/products',
+    label: 'Products',
   },
-];
+]
 
 function Header({ children }: { children: React.ReactNode }) {
-  const { theme, setTheme } = useTheme();
-  const [openSheet, setOpenSheet] = useState(false);
+  const { theme, setTheme } = useTheme()
+  const [openSheet, setOpenSheet] = useState(false)
 
   return (
-    <Context>
+    <UserContext>
       <header className='sm:flex sm:justify-between py-3 px-4 border-b'>
         <Container>
           <div className='relative px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between w-full'>
@@ -73,7 +73,7 @@ function Header({ children }: { children: React.ReactNode }) {
                 size='icon'
                 className='mr-2'
                 aria-label='Toggle Theme'
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               >
                 <Sun className='h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
                 <Moon className=' absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
@@ -85,8 +85,8 @@ function Header({ children }: { children: React.ReactNode }) {
         </Container>
       </header>
       <Container>{children}</Container>
-    </Context>
-  );
+    </UserContext>
+  )
 }
 
-export default Header;
+export default Header
