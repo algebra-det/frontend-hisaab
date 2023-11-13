@@ -206,8 +206,13 @@ export default function DialogDemo({
                                 key={q.id}
                                 onClick={e => setProductDetails(q)}
                               >
-                                {textSlice(q.productName)}, P: {q.purchasePrice}
-                                , S: {q.lastSellingPrice ?? '?'}
+                                <div>{textSlice(q.productName)},</div>
+                                <div className='ml-2'>
+                                  <span className='text-lg'>(</span>S:{' '}
+                                  {q.lastSellingPrice ?? '?'}, P:{' '}
+                                  {q.purchasePrice}
+                                  <span className='text-lg'>)</span>
+                                </div>
                               </DropdownMenuItem>
                             ))}
                           </DropdownMenuContent>
