@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-
 import {
   Form,
   FormControl,
@@ -25,8 +24,15 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { getCookie } from 'cookies-next'
 import { useState } from 'react'
-import { Transaction } from '@/types'
+import { Transaction, Product } from '@/types'
 import Loading from '../custom/Loader'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 
 const formSchema = z.object({
   productName: z
@@ -61,8 +67,10 @@ export default function DialogDemo({
 }: {
   addNewTransaction: (transaction: Transaction) => void
 }) {
+  let debounce: ReturnType<typeof setTimeout> = setTimeout(() => {}, 0)
   const authToken = getCookie('authorization')
   const [open, setOpen] = useState(false)
+  const [productsList, setProductsList] = useState([] as Product[])
   const [loading, setloading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,6 +81,41 @@ export default function DialogDemo({
       profit: '100',
     },
   })
+
+  const fetchRelatedProducts = (value: String) => {
+    clearTimeout(debounce)
+    if (value.length < 3) return
+    debounce = setTimeout(async () => {
+      try {
+        let auth = getCookie('authorization')
+        if (!auth) auth = ''
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/search?searchText=${value}`,
+          {
+            headers: {
+              Authorization: JSON.parse(JSON.stringify(auth)),
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        const fetchedProducts = await res.json()
+        console.log('Products: ', fetchedProducts)
+        setProductsList(fetchedProducts.data)
+      } catch (error) {}
+    }, 1000)
+  }
+
+  const textSlice = (string: String) => {
+    const uptoIndex = 10
+    if (string.length <= uptoIndex) return string
+    return string.slice(0, uptoIndex) + '...'
+  }
+
+  const setProductDetails = (value: Product) => {
+    form.setValue('purchasePrice', value.purchasePrice.toString())
+    if (value.lastSellingPrice)
+      form.setValue('sellingPrice', value.lastSellingPrice.toString())
+  }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log('props are : ', values)
@@ -138,11 +181,38 @@ export default function DialogDemo({
                   <FormItem>
                     <FormLabel>Product name</FormLabel>
                     <FormControl>
-                      <Input
-                        type='text'
-                        placeholder='Some Product'
-                        {...field}
-                      />
+                      <>
+                        <Input
+                          type='text'
+                          autoComplete='off'
+                          placeholder='Some Product'
+                          {...field}
+                          onChange={e => {
+                            field.onChange(e)
+                            fetchRelatedProducts(e.target.value)
+                          }}
+                        />
+                        <DropdownMenu
+                          open={!!productsList.length}
+                          onOpenChange={() => setProductsList([])}
+                        >
+                          <DropdownMenuTrigger className='w-full block'></DropdownMenuTrigger>
+                          <DropdownMenuContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625px] lg:max-w-[625px]'>
+                            <DropdownMenuLabel>
+                              Previous Matches:
+                            </DropdownMenuLabel>
+                            {productsList.map(q => (
+                              <DropdownMenuItem
+                                key={q.id}
+                                onClick={e => setProductDetails(q)}
+                              >
+                                {textSlice(q.productName)}, P: {q.purchasePrice}
+                                , S: {q.lastSellingPrice ?? '?'}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
