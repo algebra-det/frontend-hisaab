@@ -136,6 +136,7 @@ export default function DialogDemo({
       if (response.ok) {
         console.log('Response object: ', response.status, newTransaction)
         addNewTransaction(newTransaction.data)
+        form.reset()
         setOpen(false)
       } else {
         form.setError('root.serverError', {
