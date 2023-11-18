@@ -28,4 +28,6 @@ export interface Product {
   productName: string
   purchasePrice: number
   lastSellingPrice: number | null
+  totalSale: number
+  updatedAt: string
 }

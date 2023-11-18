@@ -1,11 +1,11 @@
-import React from "react";
+import MainProduct from '@/components/product/MainProducts'
 
 function products() {
   return (
     <div className='mt-5 grid place-content-center min-w-full w-25'>
-      <h2 className='text-3xl'>Products</h2>
+      <MainProduct />
     </div>
-  );
+  )
 }
 
-export default products;
+export default products

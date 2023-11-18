@@ -4,16 +4,15 @@ import { useRouter } from 'next/navigation'
 import TransactionsListWithCards from '@/components/transaction/TransactionsListWithCards'
 import NewTransaction from '@/components/transaction/NewTransaction'
 import EditTransaction from '@/components/transaction/EditTransaction'
-// import TransactionTable from "@/components/transaction/TransactionTable";
 import { useEffect, useState } from 'react'
 import { Transaction } from '@/types'
-import DeleteTransaction from './DeleteTransaction'
 import { thousandSeparator } from '@/utils/currencyFormat'
-import Filter from '@/components/transaction/Filter'
+import Filter from '@/components/common/Filter'
 import dayjs from 'dayjs'
 import { dateFormatAPI } from '@/config/format'
 import TransactionTable from './TransactionTable'
 import Loading from '../custom/Loader'
+import DeleteDialog from '../common/DeleteDialog'
 
 export default function MainTransaction() {
   const limit = 10
@@ -62,6 +61,7 @@ export default function MainTransaction() {
       setFetching(true)
       let auth = getCookie('authorization')
       if (page) setOffset(offset + limit)
+      else setOffset(0)
       if (!auth) auth = ''
       console.log('Cookie: ', auth, typeof auth)
       const response = await fetch(
@@ -96,6 +96,31 @@ export default function MainTransaction() {
       }
     } catch (error) {
       console.log('Error Occured')
+    } finally {
+      setFetching(false)
+    }
+  }
+
+  const confirmDelete = async () => {
+    try {
+      setFetching(true)
+      let auth = getCookie('authorization')
+      if (!auth) auth = ''
+
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/transactions/${edit.id}`,
+        {
+          headers: {
+            Authorization: JSON.parse(JSON.stringify(auth)),
+            'Content-Type': 'application/json',
+          },
+          method: 'DELETE',
+        }
+      )
+      fetchTransactions()
+      setOpenDelete(false)
+    } catch (error) {
+      console.log('Error: ', error)
     } finally {
       setFetching(false)
     }
@@ -156,11 +181,11 @@ export default function MainTransaction() {
           />
         )}
         {openDelete && (
-          <DeleteTransaction
-            transaction={edit}
+          <DeleteDialog
+            data={{ id: edit.id, name: edit.productName, type: 'Transaction' }}
             openDelete={openDelete}
             setOpenDelete={setOpenDelete}
-            refetchTransactions={fetchTransactions}
+            confirmDelete={confirmDelete}
           />
         )}
         <>
