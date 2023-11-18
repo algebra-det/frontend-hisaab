@@ -6,13 +6,13 @@ import NewTransaction from '@/components/transaction/NewTransaction'
 import EditTransaction from '@/components/transaction/EditTransaction'
 import { useEffect, useState } from 'react'
 import { Transaction } from '@/types'
-import DeleteTransaction from './DeleteTransaction'
 import { thousandSeparator } from '@/utils/currencyFormat'
-import Filter from '@/components/transaction/Filter'
+import Filter from '@/components/common/Filter'
 import dayjs from 'dayjs'
 import { dateFormatAPI } from '@/config/format'
 import TransactionTable from './TransactionTable'
 import Loading from '../custom/Loader'
+import DeleteDialog from '../common/DeleteDialog'
 
 export default function MainTransaction() {
   const limit = 10
@@ -101,6 +101,31 @@ export default function MainTransaction() {
     }
   }
 
+  const confirmDelete = async () => {
+    try {
+      setFetching(true)
+      let auth = getCookie('authorization')
+      if (!auth) auth = ''
+
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/transactions/${edit.id}`,
+        {
+          headers: {
+            Authorization: JSON.parse(JSON.stringify(auth)),
+            'Content-Type': 'application/json',
+          },
+          method: 'DELETE',
+        }
+      )
+      fetchTransactions()
+      setOpenDelete(false)
+    } catch (error) {
+      console.log('Error: ', error)
+    } finally {
+      setFetching(false)
+    }
+  }
+
   useEffect(() => {
     setLoadMore(
       !!Math.floor(transactionData.count % transactionData.data.length)
@@ -156,11 +181,11 @@ export default function MainTransaction() {
           />
         )}
         {openDelete && (
-          <DeleteTransaction
-            transaction={edit}
+          <DeleteDialog
+            data={{ id: edit.id, name: edit.productName, type: 'Transaction' }}
             openDelete={openDelete}
             setOpenDelete={setOpenDelete}
-            refetchTransactions={fetchTransactions}
+            confirmDelete={confirmDelete}
           />
         )}
         <>
