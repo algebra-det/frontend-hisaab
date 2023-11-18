@@ -23,7 +23,6 @@ export function DatePicker({
   const [open, setOpen] = useState(false)
 
   const updateSelectedDate: SelectSingleEventHandler = value => {
-    console.log('Selected is: ', value, typeof value, value?.toDateString())
     const dateString: string | number | Date =
       value?.toDateString() ?? new Date()
     setDate(new Date(dateString))
