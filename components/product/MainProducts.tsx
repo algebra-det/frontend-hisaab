@@ -151,7 +151,7 @@ export default function MainProduct() {
         <h1 className='text-3xl'>Products</h1>
 
         <p className='my-2'>
-          Total Product ( Within filter range ):{' '}
+          Total Products :{' '}
           <span className='text-xl font-semibold'>{productData.count}</span>
         </p>
         {open && (
