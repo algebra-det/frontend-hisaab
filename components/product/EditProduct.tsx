@@ -68,7 +68,7 @@ export default function DialogDemo({
     try {
       setloading(true)
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/product/${product.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${product.id}`,
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
