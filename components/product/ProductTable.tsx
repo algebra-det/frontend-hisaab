@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2, Info } from 'lucide-react'
 import dayjs from 'dayjs'
 
 import { Product } from '@/types'
@@ -57,6 +57,10 @@ function productTable({
                     className='h-4 w-4 cursor-pointer'
                   />
                 )}
+                <Info
+                  onClick={() => console.log('info')}
+                  className='h-4 w-4 ml-3 cursor-pointer inline-block'
+                />
               </TableCell>
             </TableRow>
           ))}

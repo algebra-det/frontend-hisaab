@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Pencil, Trash } from 'lucide-react'
+import { Pencil, Trash, Info } from 'lucide-react'
 import dayjs from 'dayjs'
 
 import { dateTimeFormatDisplay } from '@/config/format'
@@ -26,7 +26,7 @@ export default function Transactions({
       <Card className='w-full md:w-full'>
         <CardHeader className='flex flex-row justify-between px-3 pb-1 pt-3'>
           <div className='w-full'>
-            <CardTitle className='text-md sm:text-lg md:text-xl flex justify-between w-full align-top'>
+            <CardTitle className='text-md sm:text-lg md:text-xl flex justify-between w-full align-top mb-1'>
               <div>{product.productName}</div>
               <div className='flex ml-1 mt-2 sm:ml-3 md:ml-4 lg:ml-6 '>
                 <Pencil
@@ -39,6 +39,10 @@ export default function Transactions({
                     className='h-4 w-4 ml-2 cursor-pointer inline-block'
                   />
                 )}
+                <Info
+                  onClick={() => console.log('info')}
+                  className='h-4 w-4 ml-3 cursor-pointer inline-block'
+                />
               </div>
             </CardTitle>
             <CardDescription className='flex flex-row justify-between w-full'>
@@ -48,10 +52,10 @@ export default function Transactions({
               </div>
 
               <div>
-                <p className='text-md sm:text-lg md:text-xl font-semibold text-white'>
+                <p className='text-md sm:text-lg md:text-xl font-semibold text-white grid place-content-center'>
                   {product.totalSale}
                 </p>
-                <p className='text-sm text-muted-foreground'>Total Sale</p>
+                <p className='text-sm text-muted-foreground'>Sold</p>
               </div>
             </CardDescription>
           </div>
