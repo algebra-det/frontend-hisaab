@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import TransactionsListWithCards from '@/components/transaction/TransactionsListWithCards'
 import NewTransaction from '@/components/transaction/NewTransaction'
 import EditTransaction from '@/components/transaction/EditTransaction'
-// import TransactionTable from "@/components/transaction/TransactionTable";
 import { useEffect, useState } from 'react'
 import { Transaction } from '@/types'
 import DeleteTransaction from './DeleteTransaction'
@@ -62,6 +61,7 @@ export default function MainTransaction() {
       setFetching(true)
       let auth = getCookie('authorization')
       if (page) setOffset(offset + limit)
+      else setOffset(0)
       if (!auth) auth = ''
       console.log('Cookie: ', auth, typeof auth)
       const response = await fetch(
