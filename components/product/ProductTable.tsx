@@ -47,7 +47,7 @@ function productTable({
               <TableCell>
                 {dayjs(q.updatedAt).format(dateTimeFormatDisplay)}
               </TableCell>
-              <TableCell className='text-right'>{q.totalSale}</TableCell>
+              <TableCell className='text-right'>{q.totalSale ?? 0}</TableCell>
               <TableCell className='text-right flex justify-around ml-2'>
                 <Pencil
                   onClick={() => openEditDialog(q)}

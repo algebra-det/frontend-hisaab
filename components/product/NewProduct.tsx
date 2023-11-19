@@ -24,6 +24,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { getCookie } from 'cookies-next'
 import { useState } from 'react'
+import { PlusSquare } from 'lucide-react'
 import { Product } from '@/types'
 import Loading from '../custom/Loader'
 
@@ -103,9 +104,10 @@ export default function DialogDemo({
       {loading && <Loading />}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className='mb-2' variant='outline'>
-            Create New Product
-          </Button>
+          <PlusSquare
+            className='cursor-pointer h-5 w-5'
+            onClick={() => setOpen(true)}
+          />
         </DialogTrigger>
         <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625px] lg:max-w-[625px]'>
           <DialogHeader>
