@@ -5,10 +5,12 @@ import ProductsListWithCards from './ProductsListWithCards'
 import NewProduct from './NewProduct'
 import EditProduct from '@/components/product/EditProduct'
 import InfoProduct from '@/components/product/InfoProduct'
+import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Product } from '@/types'
 // import DeleteDialog from '../common/DeleteDialog'
 import Filter from '@/components/common/Filter'
+import { Input } from '@/components/ui/input'
 import dayjs from 'dayjs'
 import { dateFormatAPI } from '@/config/format'
 import ProductTable from './ProductTable'
@@ -27,8 +29,15 @@ export default function MainProduct() {
   const [duration, setDuration] = useState('day')
   const [date, setDate] = useState(today)
   const [loadMore, setLoadMore] = useState(false)
+  const [searchkeyword, setSerchKeyword] = useState('')
 
   const [productData, setProductData] = useState({
+    data: [] as Product[],
+    count: 0,
+  })
+
+  const [showSearched, setShowSearched] = useState(false)
+  const [searchedProductData, setSearchedProductData] = useState({
     data: [] as Product[],
     count: 0,
   })
@@ -86,13 +95,14 @@ export default function MainProduct() {
   }, [date, duration])
 
   const fetchProducts = async (page?: boolean) => {
+    setShowSearched(false)
+    setSerchKeyword('')
     try {
       setFetching(true)
       let auth = getCookie('authorization')
+      if (!auth) auth = ''
       if (page) setOffset(offset + limit)
       setOffset(0)
-      if (!auth) auth = ''
-      console.log('Cookie: ', auth, typeof auth)
       const response = await fetch(
         `${
           process.env.NEXT_PUBLIC_API_URL
@@ -130,9 +140,55 @@ export default function MainProduct() {
     }
   }
 
+  const handleSearch = async () => {
+    setError('')
+    try {
+      if (!searchkeyword.length || searchkeyword.length < 3) {
+        setError('Please search with atleast 3 characters')
+        setTimeout(() => {
+          setError('')
+        }, 5000)
+        return
+      }
+      setFetching(true)
+      let auth = getCookie('authorization')
+      if (!auth) auth = ''
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/search?searchText=${searchkeyword}&dateRange=${duration}&workingDate=${date}`,
+        {
+          headers: {
+            Authorization: JSON.parse(JSON.stringify(auth)),
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      console.log('response: ', response)
+      if (response.ok) {
+        const data = await response.json()
+        console.log('products are: ', data)
+        setSearchedProductData(data)
+        setShowSearched(true)
+      } else if (response.status === 401) {
+        router.push('/login')
+      } else {
+        setError('Error occured while searching')
+      }
+    } catch (error) {
+      console.log('Error while searching: ', error)
+    } finally {
+      setFetching(false)
+    }
+  }
+
   useEffect(() => {
     setLoadMore(!!Math.floor(productData.count % productData.data.length))
   }, [productData])
+
+  useEffect(() => {
+    if (!searchkeyword.length) {
+      setShowSearched(false)
+    }
+  }, [searchkeyword])
 
   const addNewProduct = (product: Product) => {
     if (!dayjs(today).isSame(dayjs(date))) return
@@ -159,10 +215,13 @@ export default function MainProduct() {
       <>
         <h1 className='text-3xl'>Products</h1>
 
-        <p className='my-2'>
-          Total Products :{' '}
-          <span className='text-xl font-semibold'>{productData.count}</span>
-        </p>
+        <div className='flex justify-between items-center my-2'>
+          <p>
+            Total Products :{' '}
+            <span className='text-xl font-semibold'>{productData.count}</span>
+          </p>
+          <NewProduct addNewProduct={addNewProduct} />
+        </div>
         {open && (
           <EditProduct
             product={edit}
@@ -185,18 +244,35 @@ export default function MainProduct() {
         <>
           <Filter changeDate={changeDate} changeDuration={changeDuration} />
 
-          <NewProduct addNewProduct={addNewProduct} />
+          <div className='flex justify-end items-center mb-2'>
+            <Input
+              type='search'
+              placeholder='Search product...'
+              value={searchkeyword}
+              onChange={e => setSerchKeyword(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSearch()}
+            />
+            <Search
+              className='mr-3 ml-2 cursor-pointer'
+              onClick={handleSearch}
+            />
+          </div>
+          {error && <p className='text-xs my-2'>{error}</p>}
 
           <ProductTable
-            products={productData.data}
+            products={
+              showSearched ? searchedProductData.data : productData.data
+            }
             openEditDialog={openEditDialog}
             openInfoDialog={openInfoDialog}
             // openDeleteDialog={openDeleteDialog}
           />
 
           <ProductsListWithCards
-            products={productData.data}
-            canLoadMore={loadMore}
+            products={
+              showSearched ? searchedProductData.data : productData.data
+            }
+            canLoadMore={showSearched ? false : loadMore}
             fetchMoreProducts={fetchProducts}
             openEditDialog={openEditDialog}
             openInfoDialog={openInfoDialog}
@@ -205,7 +281,6 @@ export default function MainProduct() {
           <div className='my-5'></div>
         </>
       </>
-      {error && <p>{error}</p>}
     </>
   )
 }

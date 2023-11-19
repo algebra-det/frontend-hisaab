@@ -55,7 +55,7 @@ export default function Transactions({
 
               <div>
                 <p className='text-md sm:text-lg md:text-xl font-semibold text-white grid place-content-center'>
-                  {product.totalSale}
+                  {product.totalSale ?? 0}
                 </p>
                 <p className='text-sm text-muted-foreground'>Sold</p>
               </div>
