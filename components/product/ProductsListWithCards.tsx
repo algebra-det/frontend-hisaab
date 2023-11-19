@@ -6,12 +6,14 @@ function TransactionsListWithCards({
   products,
   canLoadMore,
   openEditDialog,
+  openInfoDialog,
   openDeleteDialog,
   fetchMoreProducts,
 }: {
   products: Product[]
   canLoadMore: boolean
   openEditDialog: (product: Product) => void
+  openInfoDialog: (product: Product) => void
   openDeleteDialog?: (product: Product) => void
   fetchMoreProducts: (value: boolean) => void
 }) {
@@ -27,6 +29,7 @@ function TransactionsListWithCards({
                     product={q}
                     openEditDialog={openEditDialog}
                     openDeleteDialog={openDeleteDialog}
+                    openInfoDialog={openInfoDialog}
                   />
                 </div>
               ))}

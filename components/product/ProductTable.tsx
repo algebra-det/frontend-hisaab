@@ -16,10 +16,12 @@ import { dateTimeFormatDisplay } from '@/config/format'
 function productTable({
   products,
   openEditDialog,
+  openInfoDialog,
   openDeleteDialog,
 }: {
   products: Product[]
   openEditDialog: (product: Product) => void
+  openInfoDialog: (product: Product) => void
   openDeleteDialog?: (product: Product) => void
 }) {
   return (
@@ -58,7 +60,7 @@ function productTable({
                   />
                 )}
                 <Info
-                  onClick={() => console.log('info')}
+                  onClick={() => openInfoDialog(q)}
                   className='h-4 w-4 ml-3 cursor-pointer inline-block'
                 />
               </TableCell>

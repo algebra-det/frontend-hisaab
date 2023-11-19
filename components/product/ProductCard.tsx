@@ -15,9 +15,11 @@ import { Product } from '@/types'
 export default function Transactions({
   product,
   openEditDialog,
+  openInfoDialog,
   openDeleteDialog,
 }: {
   openEditDialog: (product: Product) => void
+  openInfoDialog: (product: Product) => void
   openDeleteDialog?: (transaction: Product) => void
   product: Product
 }) {
@@ -40,7 +42,7 @@ export default function Transactions({
                   />
                 )}
                 <Info
-                  onClick={() => console.log('info')}
+                  onClick={() => openInfoDialog(product)}
                   className='h-4 w-4 ml-3 cursor-pointer inline-block'
                 />
               </div>
