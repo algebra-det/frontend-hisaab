@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2, Info } from 'lucide-react'
 import dayjs from 'dayjs'
 
 import { Product } from '@/types'
@@ -16,10 +16,12 @@ import { dateTimeFormatDisplay } from '@/config/format'
 function productTable({
   products,
   openEditDialog,
+  openInfoDialog,
   openDeleteDialog,
 }: {
   products: Product[]
   openEditDialog: (product: Product) => void
+  openInfoDialog: (product: Product) => void
   openDeleteDialog?: (product: Product) => void
 }) {
   return (
@@ -57,6 +59,10 @@ function productTable({
                     className='h-4 w-4 cursor-pointer'
                   />
                 )}
+                <Info
+                  onClick={() => openInfoDialog(q)}
+                  className='h-4 w-4 ml-3 cursor-pointer inline-block'
+                />
               </TableCell>
             </TableRow>
           ))}

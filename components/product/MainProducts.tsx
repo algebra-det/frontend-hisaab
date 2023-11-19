@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import ProductsListWithCards from './ProductsListWithCards'
 import NewProduct from './NewProduct'
 import EditProduct from '@/components/product/EditProduct'
+import InfoProduct from '@/components/product/InfoProduct'
 import { useEffect, useState } from 'react'
 import { Product } from '@/types'
 // import DeleteDialog from '../common/DeleteDialog'
@@ -17,6 +18,7 @@ export default function MainProduct() {
   const limit = 10
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
   // const [openDelete, setOpenDelete] = useState(false)
   const [error, setError] = useState('')
   const [fetching, setFetching] = useState(true)
@@ -36,6 +38,13 @@ export default function MainProduct() {
     setTimeout(() => {
       setOpen(true)
     }, 100)
+  }
+
+  const openInfoDialog = (editedProduct: Product) => {
+    setEdit(editedProduct)
+    setTimeout(() => {
+      setInfoOpen(true)
+    }, 0)
   }
   // const openDeleteDialog = (editedProduct: Product) => {
   //   setEdit(editedProduct)
@@ -162,6 +171,9 @@ export default function MainProduct() {
             updateProduct={updateProduct}
           />
         )}
+        {infoOpen && (
+          <InfoProduct product={edit} open={infoOpen} setOpen={setInfoOpen} />
+        )}
         {/* {openDelete && (
           <DeleteDialog
             data={{ id: edit.id, name: edit.productName, type: 'Product' }}
@@ -178,6 +190,7 @@ export default function MainProduct() {
           <ProductTable
             products={productData.data}
             openEditDialog={openEditDialog}
+            openInfoDialog={openInfoDialog}
             // openDeleteDialog={openDeleteDialog}
           />
 
@@ -186,6 +199,7 @@ export default function MainProduct() {
             canLoadMore={loadMore}
             fetchMoreProducts={fetchProducts}
             openEditDialog={openEditDialog}
+            openInfoDialog={openInfoDialog}
             // openDeleteDialog={openDeleteDialog}
           />
           <div className='my-5'></div>
