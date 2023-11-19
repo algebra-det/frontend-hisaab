@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import Container from './Container'
-import { Menu, Moon, Sun } from 'lucide-react'
+import { IndianRupee, Menu, Moon, Sun } from 'lucide-react'
 import ProfileButton from './ProfileButton'
 import { useState } from 'react'
 import UserContext from '@/contexts/userContext'
@@ -52,7 +52,7 @@ function Header({ children }: { children: React.ReactNode }) {
                 </SheetContent>
               </Sheet>
               <Link href='/' className='ml-4 lg:ml-0'>
-                <h1 className='text-xl font-bold'>Transactions</h1>
+                <IndianRupee />
               </Link>
             </div>
             <nav className='mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block'>
