@@ -14,7 +14,7 @@ export default async function Home() {
         Go to your{' '}
         <Link className='underline' href='/transactions'>
           Transactions
-        </Link>{' '}
+        </Link>
       </h2>
     </div>
   )
