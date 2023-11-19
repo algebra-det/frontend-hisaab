@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@/components/ui/button'
+import { Button } from '../ui/button'
 import {
   Dialog,
   DialogContent,
@@ -33,6 +33,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { PlusSquare } from 'lucide-react'
 
 const formSchema = z.object({
   productName: z
@@ -157,9 +158,10 @@ export default function DialogDemo({
       {loading && <Loading />}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className='mb-2' variant='outline'>
-            Create New Transaction
-          </Button>
+          <PlusSquare
+            className='cursor-pointer h-5 w-5'
+            onClick={() => setOpen(true)}
+          />
         </DialogTrigger>
         <DialogContent className='max-w-[325px] sm:max-w-[425px] md:max-w-[625px] lg:max-w-[625px]'>
           <DialogHeader>

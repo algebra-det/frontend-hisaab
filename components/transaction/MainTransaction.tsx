@@ -166,12 +166,15 @@ export default function MainTransaction() {
       <>
         <h1 className='text-3xl'>Transactions</h1>
 
-        <p className='my-2'>
-          Total Profit:{' '}
-          <span className='text-xl font-semibold'>
-            {thousandSeparator(transactionData.totalProfit)}
-          </span>
-        </p>
+        <div className='flex justify-between items-center my-2'>
+          <p>
+            Total Profit:{' '}
+            <span className='text-xl font-semibold'>
+              {thousandSeparator(transactionData.totalProfit)}
+            </span>
+          </p>
+          <NewTransaction addNewTransaction={addNewTransaction} />
+        </div>
         {open && (
           <EditTransaction
             transaction={edit}
@@ -190,8 +193,6 @@ export default function MainTransaction() {
         )}
         <>
           <Filter changeDate={changeDate} changeDuration={changeDuration} />
-
-          <NewTransaction addNewTransaction={addNewTransaction} />
 
           <TransactionTable
             transactions={transactionData.data}
