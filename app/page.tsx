@@ -11,10 +11,10 @@ export default async function Home() {
     <div className='grid place-content-center mt-4'>
       <h2 className='mt-4'>
         <p className='text-2xl'>{indexData.message}</p>
-        <Link className='underline' href='/login'>
-          Login
+        Go to your{' '}
+        <Link className='underline' href='/transactions'>
+          Transactions
         </Link>{' '}
-        to continue...
       </h2>
     </div>
   )
