@@ -63,7 +63,6 @@ export default function MainTransaction() {
       if (page) setOffset(offset + limit)
       else setOffset(0)
       if (!auth) auth = ''
-      console.log('Cookie: ', auth, typeof auth)
       const response = await fetch(
         `${
           process.env.NEXT_PUBLIC_API_URL
@@ -77,10 +76,8 @@ export default function MainTransaction() {
           },
         }
       )
-      console.log('response: ', response)
       if (response.ok) {
         const data = await response.json()
-        console.log('Transactions are: ', data)
         if (!page) setTransactionData(data)
         else {
           setTransactionData({
