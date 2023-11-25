@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from '@/components/ui/dialog'
 
 import {
@@ -15,7 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Transaction } from '@/types'
@@ -52,14 +52,14 @@ const formSchema = z.object({
       return !isNaN(n) && v?.length > 0
     },
     { message: 'Invalid number' }
-  ),
+  )
 })
 
 export default function DialogDemo({
   transaction,
   open,
   setOpen,
-  updateTransaction,
+  updateTransaction
 }: {
   transaction: Transaction
   open: boolean
@@ -73,8 +73,8 @@ export default function DialogDemo({
       productName: transaction.productName,
       sellingPrice: transaction.sellingPrice.toString(),
       purchasePrice: transaction.purchasePrice.toString(),
-      profit: transaction.profit.toString(),
-    },
+      profit: transaction.profit.toString()
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -88,10 +88,10 @@ export default function DialogDemo({
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'PUT',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       let updatedTransaction = await response.json()
@@ -105,7 +105,7 @@ export default function DialogDemo({
           message:
             updatedTransaction.message ||
             updatedTransaction.data ||
-            'Something went wrong!',
+            'Something went wrong!'
         })
       }
       console.log('Response object: ', response.status, updatedTransaction)

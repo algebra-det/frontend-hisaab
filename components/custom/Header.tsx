@@ -12,12 +12,12 @@ import UserContext from '@/contexts/userContext'
 const routes = [
   {
     href: '/transactions',
-    label: 'Transactions',
+    label: 'Transactions'
   },
   {
     href: '/products',
-    label: 'Products',
-  },
+    label: 'Products'
+  }
 ]
 
 function Header({ children }: { children: React.ReactNode }) {

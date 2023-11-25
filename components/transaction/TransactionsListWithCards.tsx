@@ -1,19 +1,19 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import TransactionCard from "./TransactionCard";
+import { ScrollArea } from '@/components/ui/scroll-area'
+import TransactionCard from './TransactionCard'
 
-import { Transaction } from "@/types";
+import { Transaction } from '@/types'
 function TransactionsListWithCards({
   transactions,
   canLoadMore,
   openEditDialog,
   openDeleteDialog,
-  fetchMoreTransactions,
+  fetchMoreTransactions
 }: {
-  transactions: Transaction[];
-  canLoadMore: boolean;
-  openEditDialog: (transaction: Transaction) => void;
-  openDeleteDialog: (transaction: Transaction) => void;
-  fetchMoreTransactions: (value: boolean) => void;
+  transactions: Transaction[]
+  canLoadMore: boolean
+  openEditDialog: (transaction: Transaction) => void
+  openDeleteDialog: (transaction: Transaction) => void
+  fetchMoreTransactions: (value: boolean) => void
 }) {
   return (
     <>
@@ -21,7 +21,7 @@ function TransactionsListWithCards({
         <div>
           {transactions.length ? (
             <ScrollArea className='h-96 rounded-xl border p-4'>
-              {transactions.map((q) => (
+              {transactions.map(q => (
                 <div className='mt-2' key={q.id}>
                   <TransactionCard
                     transaction={q}
@@ -45,7 +45,7 @@ function TransactionsListWithCards({
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default TransactionsListWithCards;
+export default TransactionsListWithCards

@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from '@/components/ui/dialog'
 
 import { Dispatch, SetStateAction } from 'react'
@@ -15,7 +15,7 @@ export default function DialogDemo({
   data,
   openDelete,
   setOpenDelete,
-  confirmDelete,
+  confirmDelete
 }: {
   data: { id: Number; name: String; type: String }
   openDelete: boolean

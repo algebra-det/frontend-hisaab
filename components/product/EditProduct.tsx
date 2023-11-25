@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from '@/components/ui/dialog'
 
 import {
@@ -15,7 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Product } from '@/types'
@@ -38,14 +38,14 @@ const formSchema = z.object({
       return !isNaN(n) && v?.length > 0
     },
     { message: 'Invalid number' }
-  ),
+  )
 })
 
 export default function DialogDemo({
   product,
   open,
   setOpen,
-  updateProduct,
+  updateProduct
 }: {
   product: Product
   open: boolean
@@ -57,8 +57,8 @@ export default function DialogDemo({
     resolver: zodResolver(formSchema),
     defaultValues: {
       productName: product.productName,
-      purchasePrice: product.purchasePrice.toString(),
-    },
+      purchasePrice: product.purchasePrice.toString()
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -72,10 +72,10 @@ export default function DialogDemo({
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'PUT',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       let updatedProduct = await response.json()
@@ -89,7 +89,7 @@ export default function DialogDemo({
           message:
             updatedProduct.message ||
             updatedProduct.data ||
-            'Something went wrong!',
+            'Something went wrong!'
         })
       }
       console.log('Response object: ', response.status, updatedProduct)

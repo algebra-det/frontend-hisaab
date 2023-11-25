@@ -8,7 +8,7 @@ function TransactionsListWithCards({
   openEditDialog,
   openInfoDialog,
   openDeleteDialog,
-  fetchMoreProducts,
+  fetchMoreProducts
 }: {
   products: Product[]
   canLoadMore: boolean

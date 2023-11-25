@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Header from "@/components/custom/Header";
-import { ThemeProvider } from "@/components/custom/ThemeProvider";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import Header from '@/components/custom/Header'
+import { ThemeProvider } from '@/components/custom/ThemeProvider'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Transactions",
-  description: "Log your transactions",
-};
+  title: 'Transactions',
+  description: 'Log your transactions'
+}
 
 export default function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang='en'>
@@ -24,5 +24,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

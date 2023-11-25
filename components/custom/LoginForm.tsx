@@ -5,7 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { setCookie } from 'cookies-next'
 
@@ -26,7 +26,7 @@ const formSchema = z.object({
   password: z
     .string()
     .min(1, 'Password is required.')
-    .min(8, 'Password must have more than 8 characters.'),
+    .min(8, 'Password must have more than 8 characters.')
 })
 
 function LoginForm() {
@@ -37,8 +37,8 @@ function LoginForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      password: '',
-    },
+      password: ''
+    }
   })
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log('props are : ', values)
@@ -48,10 +48,10 @@ function LoginForm() {
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
         {
           headers: {
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       const loginResponse = await response.json()
@@ -64,7 +64,7 @@ function LoginForm() {
       } else {
         form.setError('root.serverError', {
           type: response.status.toString(),
-          message: loginResponse.message,
+          message: loginResponse.message
         })
       }
       console.log('Response object: ', response.status, loginResponse)

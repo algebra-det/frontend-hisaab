@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 
 import {
   Select,
@@ -7,19 +7,19 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  SelectValue
+} from '@/components/ui/select'
 
-import DatePicker from "@/components/transaction/DatePicker";
+import DatePicker from '@/components/transaction/DatePicker'
 
 export function Filter({
   yearOption = false,
   changeDuration,
-  changeDate,
+  changeDate
 }: {
-  yearOption?: boolean;
-  changeDuration: (value: string) => void;
-  changeDate: (value: string) => void;
+  yearOption?: boolean
+  changeDuration: (value: string) => void
+  changeDate: (value: string) => void
 }) {
   return (
     <div className='flex mb-2'>
@@ -39,7 +39,7 @@ export function Filter({
       </Select>
       <DatePicker changeDate={changeDate} />
     </div>
-  );
+  )
 }
 
-export default Filter;
+export default Filter

@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@/components/ui/table'
 import { Pencil, Trash2 } from 'lucide-react'
 import dayjs from 'dayjs'
@@ -17,7 +17,7 @@ function transactionTable({
   transactions,
 
   openEditDialog,
-  openDeleteDialog,
+  openDeleteDialog
 }: {
   transactions: Transaction[]
 

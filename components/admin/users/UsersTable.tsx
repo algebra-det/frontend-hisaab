@@ -5,21 +5,21 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Switch } from "@/components/ui/switch";
-import { Pencil, Trash2 } from "lucide-react";
+  TableRow
+} from '@/components/ui/table'
+import { Switch } from '@/components/ui/switch'
+import { Pencil, Trash2 } from 'lucide-react'
 
-import { AdminUser } from "@/types";
-import dayjs from "dayjs";
-import { dateTimeFormatDisplay } from "@/config/format";
+import { AdminUser } from '@/types'
+import dayjs from 'dayjs'
+import { dateTimeFormatDisplay } from '@/config/format'
 
 function UsersTable({
   users,
-  handleUserActiveChange,
+  handleUserActiveChange
 }: {
-  users: AdminUser[];
-  handleUserActiveChange: (value: boolean, user: AdminUser) => void;
+  users: AdminUser[]
+  handleUserActiveChange: (value: boolean, user: AdminUser) => void
 }) {
   return (
     <div>
@@ -36,7 +36,7 @@ function UsersTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((q) => (
+          {users.map(q => (
             <TableRow key={q.id}>
               <TableCell className='font-medium'>{q.name}</TableCell>
               <TableCell>{q.email}</TableCell>
@@ -49,7 +49,7 @@ function UsersTable({
                   id={`${q.id}-user`}
                   className='cursor-pointer'
                   checked={q.active}
-                  onCheckedChange={(value) => handleUserActiveChange(value, q)}
+                  onCheckedChange={value => handleUserActiveChange(value, q)}
                 />
               </TableCell>
               <TableCell className='text-right flex justify-around ml-2'>
@@ -61,7 +61,7 @@ function UsersTable({
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }
 
-export default UsersTable;
+export default UsersTable

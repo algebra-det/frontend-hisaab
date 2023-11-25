@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from '@/components/ui/card'
 import { Pencil, Trash } from 'lucide-react'
 import dayjs from 'dayjs'
@@ -15,7 +15,7 @@ import { Transaction } from '@/types'
 export default function Transactions({
   transaction,
   openEditDialog,
-  openDeleteDialog,
+  openDeleteDialog
 }: {
   openEditDialog: (transaction: Transaction) => void
   openDeleteDialog: (transaction: Transaction) => void

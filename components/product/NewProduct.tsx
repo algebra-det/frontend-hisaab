@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -15,7 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
@@ -39,11 +39,11 @@ const formSchema = z.object({
       return !isNaN(n) && v?.length > 0
     },
     { message: 'Invalid number' }
-  ),
+  )
 })
 
 export default function DialogDemo({
-  addNewProduct,
+  addNewProduct
 }: {
   addNewProduct: (product: Product) => void
 }) {
@@ -54,8 +54,8 @@ export default function DialogDemo({
     resolver: zodResolver(formSchema),
     defaultValues: {
       productName: '',
-      purchasePrice: '',
-    },
+      purchasePrice: ''
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -67,10 +67,10 @@ export default function DialogDemo({
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(authToken)),
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       const newProduct = await response.json()
@@ -88,7 +88,7 @@ export default function DialogDemo({
         if (newProduct.fieldName) errorLevel = newProduct.fieldName
         form.setError(errorLevel, {
           type: response.status.toString(),
-          message: newProduct.message,
+          message: newProduct.message
         })
       }
       console.log('Response object: ', response.status, newProduct)

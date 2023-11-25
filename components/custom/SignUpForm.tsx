@@ -5,7 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -29,11 +29,11 @@ const formSchema = z
       .string()
       .min(1, 'Password is required.')
       .min(8, 'Password must have more than 8 characters.'),
-    confirmPassword: z.string().min(1, 'Confirm Password is required.'),
+    confirmPassword: z.string().min(1, 'Confirm Password is required.')
   })
   .refine(data => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
-    message: 'Passwords do not match',
+    message: 'Passwords do not match'
   })
 
 function SingUpForm() {
@@ -45,8 +45,8 @@ function SingUpForm() {
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
-    },
+      confirmPassword: ''
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -57,10 +57,10 @@ function SingUpForm() {
         `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
         {
           headers: {
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       const signUpResponse = await response.json()
@@ -70,12 +70,12 @@ function SingUpForm() {
         if (response.status === 400)
           form.setError(signUpResponse.fieldName, {
             type: response.status.toString(),
-            message: signUpResponse.message,
+            message: signUpResponse.message
           })
         else
           form.setError('root.serverError', {
             type: response.status.toString(),
-            message: signUpResponse.message,
+            message: signUpResponse.message
           })
       }
       console.log('Response object: ', response.status, signUpResponse)

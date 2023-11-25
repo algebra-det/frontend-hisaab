@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@/components/ui/table'
 import { Pencil, Trash2, Info } from 'lucide-react'
 import dayjs from 'dayjs'
@@ -17,7 +17,7 @@ function productTable({
   products,
   openEditDialog,
   openInfoDialog,
-  openDeleteDialog,
+  openDeleteDialog
 }: {
   products: Product[]
   openEditDialog: (product: Product) => void

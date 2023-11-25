@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 async function admin() {
   return (
@@ -6,7 +6,7 @@ async function admin() {
       <h1>Admin</h1>
       <Link href='/admin/users'>Checkout Users</Link>
     </div>
-  );
+  )
 }
 
-export default admin;
+export default admin

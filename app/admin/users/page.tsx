@@ -1,4 +1,4 @@
-import MainUsers from "@/components/admin/users/MainUsers";
+import MainUsers from '@/components/admin/users/MainUsers'
 
 async function users() {
   return (
@@ -6,7 +6,7 @@ async function users() {
       <h1>Users</h1>
       <MainUsers />
     </div>
-  );
+  )
 }
 
-export default users;
+export default users

@@ -5,7 +5,7 @@ import { Calendar } from '@/components/ui/calendar'
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverTrigger
 } from '@/components/ui/popover'
 import dayjs from 'dayjs'
 import { CalendarDays } from 'lucide-react'
@@ -14,7 +14,7 @@ import { dateFormatAPI, dateFormatDisplay } from '@/config/format'
 import { SelectSingleEventHandler } from 'react-day-picker'
 
 export function DatePicker({
-  changeDate,
+  changeDate
 }: {
   changeDate: (value: string) => void
 }) {

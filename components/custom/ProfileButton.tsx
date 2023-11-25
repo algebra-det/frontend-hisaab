@@ -4,58 +4,58 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { userContext } from "@/contexts/userContext";
-import { useContext, useEffect } from "react";
-import { getCookie, deleteCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { userContext } from '@/contexts/userContext'
+import { useContext, useEffect } from 'react'
+import { getCookie, deleteCookie } from 'cookies-next'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 function ProfileButton() {
-  const router = useRouter();
-  const { user, setUser } = useContext(userContext);
+  const router = useRouter()
+  const { user, setUser } = useContext(userContext)
 
   const checkAndSetUser = async () => {
-    const auth = getCookie("authorization");
+    const auth = getCookie('authorization')
     if (auth) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
         {
           headers: {
-            "content-type": "application/json",
+            'content-type': 'application/json'
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
-            token: JSON.parse(JSON.stringify(auth)),
-          }),
+            token: JSON.parse(JSON.stringify(auth))
+          })
         }
-      );
+      )
       if (response.ok) {
-        const userResponse = await response.json();
-        setUser(userResponse.data);
+        const userResponse = await response.json()
+        setUser(userResponse.data)
       }
     } else {
       setUser({
         id: 0,
-        name: "g",
+        name: 'g',
         email: '',
-        role: "",
-        token: "",
-      });
+        role: '',
+        token: ''
+      })
     }
-  };
+  }
 
   useEffect(() => {
-    checkAndSetUser();
-  }, []);
+    checkAndSetUser()
+  }, [])
 
   const handleLogout = () => {
-    deleteCookie("authorization");
-    setUser({ id: 0, name: "g", email: '', role: "", token: "" });
-    router.push("/login?logout=success");
-  };
+    deleteCookie('authorization')
+    setUser({ id: 0, name: 'g', email: '', role: '', token: '' })
+    router.push('/login?logout=success')
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -87,7 +87,7 @@ function ProfileButton() {
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
-export default ProfileButton;
+export default ProfileButton

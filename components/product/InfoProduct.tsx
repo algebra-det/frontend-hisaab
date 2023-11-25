@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
+  DialogTitle
 } from '@/components/ui/dialog'
 import { Product } from '@/types'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
@@ -13,7 +13,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 function InfoProduct({
   product,
   open,
-  setOpen,
+  setOpen
 }: {
   product: Product
   open: boolean
@@ -33,8 +33,8 @@ function InfoProduct({
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }
       )
       const productAdditionalInfo = await response.json()

@@ -23,12 +23,12 @@ function MainUsers() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'PATCH',
           body: JSON.stringify({
-            active: value,
-          }),
+            active: value
+          })
         }
       )
       let updatedUser = await response.json()
@@ -65,8 +65,8 @@ function MainUsers() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }
       )
       console.log('response: ', response)

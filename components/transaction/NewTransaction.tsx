@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -15,7 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
@@ -31,7 +31,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '../ui/dropdown-menu'
 import { PlusSquare } from 'lucide-react'
 
@@ -60,11 +60,11 @@ const formSchema = z.object({
       return !isNaN(n) && v?.length > 0
     },
     { message: 'Invalid number' }
-  ),
+  )
 })
 
 export default function DialogDemo({
-  addNewTransaction,
+  addNewTransaction
 }: {
   addNewTransaction: (transaction: Transaction) => void
 }) {
@@ -79,8 +79,8 @@ export default function DialogDemo({
       productName: '',
       sellingPrice: '',
       purchasePrice: '',
-      profit: '100',
-    },
+      profit: '100'
+    }
   })
 
   const fetchRelatedProducts = (value: String) => {
@@ -95,8 +95,8 @@ export default function DialogDemo({
           {
             headers: {
               Authorization: JSON.parse(JSON.stringify(auth)),
-              'Content-Type': 'application/json',
-            },
+              'Content-Type': 'application/json'
+            }
           }
         )
         const fetchedProducts = await res.json()
@@ -127,10 +127,10 @@ export default function DialogDemo({
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(authToken)),
-            'content-type': 'application/json',
+            'content-type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify(values)
         }
       )
       const newTransaction = await response.json()
@@ -142,7 +142,7 @@ export default function DialogDemo({
       } else {
         form.setError('root.serverError', {
           type: response.status.toString(),
-          message: newTransaction.message,
+          message: newTransaction.message
         })
       }
       console.log('Response object: ', response.status, newTransaction)
