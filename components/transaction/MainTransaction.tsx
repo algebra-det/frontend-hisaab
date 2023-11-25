@@ -30,7 +30,7 @@ export default function MainTransaction() {
   const [transactionData, setTransactionData] = useState({
     data: [] as Transaction[],
     totalProfit: 0,
-    count: 0,
+    count: 0
   })
   const [edit, setEdit] = useState({} as Transaction)
   const openEditDialog = (editedTransaction: Transaction) => {
@@ -72,8 +72,8 @@ export default function MainTransaction() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }
       )
       if (response.ok) {
@@ -82,7 +82,7 @@ export default function MainTransaction() {
         else {
           setTransactionData({
             ...transactionData,
-            data: [...transactionData.data, ...data.data],
+            data: [...transactionData.data, ...data.data]
           })
         }
         setFetching(false)
@@ -109,12 +109,12 @@ export default function MainTransaction() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          method: 'DELETE',
+          method: 'DELETE'
         }
       )
-      fetchTransactions()
+      removeTransaction(edit)
       setOpenDelete(false)
     } catch (error) {
       console.log('Error: ', error)
@@ -133,9 +133,9 @@ export default function MainTransaction() {
     if (!dayjs(today).isSame(dayjs(date))) return
     const newProfit = transactionData.totalProfit + transaction.profit
     setTransactionData({
-      ...transactionData,
+      count: transactionData.count + 1,
       data: [transaction, ...transactionData.data],
-      totalProfit: newProfit,
+      totalProfit: newProfit
     })
   }
 
@@ -153,7 +153,19 @@ export default function MainTransaction() {
     setTransactionData({
       ...transactionData,
       data: allTransactions,
-      totalProfit: newProfit,
+      totalProfit: newProfit
+    })
+  }
+
+  const removeTransaction = (transaction: Transaction) => {
+    const allTransactions = transactionData.data.filter(
+      q => q.id !== transaction.id
+    )
+    const newProfit = transactionData.totalProfit - transaction.profit
+    setTransactionData({
+      count: transactionData.count - 1,
+      data: allTransactions,
+      totalProfit: newProfit
     })
   }
 

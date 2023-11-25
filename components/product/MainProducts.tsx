@@ -33,13 +33,13 @@ export default function MainProduct() {
 
   const [productData, setProductData] = useState({
     data: [] as Product[],
-    count: 0,
+    count: 0
   })
 
   const [showSearched, setShowSearched] = useState(false)
   const [searchedProductData, setSearchedProductData] = useState({
     data: [] as Product[],
-    count: 0,
+    count: 0
   })
   const [edit, setEdit] = useState({} as Product)
   const openEditDialog = (editedProduct: Product) => {
@@ -112,8 +112,8 @@ export default function MainProduct() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }
       )
       console.log('response: ', response)
@@ -124,7 +124,7 @@ export default function MainProduct() {
         else {
           setProductData({
             ...productData,
-            data: [...productData.data, ...data.data],
+            data: [...productData.data, ...data.data]
           })
         }
         setFetching(false)
@@ -158,8 +158,8 @@ export default function MainProduct() {
         {
           headers: {
             Authorization: JSON.parse(JSON.stringify(auth)),
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }
       )
       console.log('response: ', response)
@@ -193,8 +193,8 @@ export default function MainProduct() {
   const addNewProduct = (product: Product) => {
     if (!dayjs(today).isSame(dayjs(date))) return
     setProductData({
-      ...productData,
-      data: [product, ...productData.data],
+      count: productData.count + 1,
+      data: [product, ...productData.data]
     })
   }
 
@@ -205,7 +205,7 @@ export default function MainProduct() {
     })
     setProductData({
       ...productData,
-      data: allProducts,
+      data: allProducts
     })
   }
 
